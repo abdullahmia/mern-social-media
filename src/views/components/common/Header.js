@@ -1,21 +1,25 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.png";
-import getUser from "../../../helper/user";
+import { userLoggedOut } from "../../../features/auth/authSlice";
 import Switcher from "../custom/Switcher";
 import Image from "./Image";
 import AddPost from "./modals/addPost/AddPost";
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
-  const user = getUser();
   // let image = user?.image ? user?.image : "user_cowfsl";
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
+
   // logout function
   const logout = () => {
-    localStorage.removeItem("user");
+    dispatch(userLoggedOut());
     navigate("/login");
   };
 

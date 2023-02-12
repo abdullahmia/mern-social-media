@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import getUser from "../../../helper/user";
@@ -18,28 +18,38 @@ const Edit = () => {
 
   let user = data?.user;
   // update profile
-  const [updateProfile, { isLoading: updaeProfileLoading }] =
-    useUpdateProfileMutation();
+  const [
+    updateProfile,
+    {
+      isLoading: updaeProfileLoading,
+      isSuccess,
+      isError,
+      data: updateProfileResponse,
+    },
+  ] = useUpdateProfileMutation();
 
   // update profile submit handler
   const updateProfileHandler = async (data) => {
-    await updateProfile(data).then((res) => {
-      if (res.data) {
-        let user = JSON.parse(localStorage.getItem("user"));
-        localStorage.removeItem("user");
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ token: user.token, ...user })
-        );
-        toast.custom((t) => (
-          <div className="dark:bg-gray-700 bg-white dark:text-gray-300 mb-4 p-4 rounded-md shadow-md flex flex-col gap-9">
-            <h2>{res?.data?.message}</h2>
-          </div>
-        ));
-        // toast(res?.data?.message);
-      }
-    });
+    await updateProfile(data);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.custom((t) => (
+        <div className="dark:bg-gray-700 bg-white dark:text-gray-300 mb-4 p-4 rounded-md shadow-md flex flex-col gap-9">
+          <h2>{updateProfileResponse.message}</h2>
+        </div>
+      ));
+    }
+
+    if (isError) {
+      toast.custom((t) => (
+        <div className="dark:bg-gray-700 bg-white dark:text-gray-300 mb-4 p-4 rounded-md shadow-md flex flex-col gap-9">
+          <h2>Something went wrong!</h2>
+        </div>
+      ));
+    }
+  }, [isSuccess, isError, updateProfileResponse]);
 
   // add photo to image
   const addPhotoToPost = (e) => {
@@ -103,7 +113,7 @@ const Edit = () => {
                     />
                   ) : (
                     <Image
-                      src={image}
+                      src={image ? image : "social-media/user_wxjx6f"}
                       classname="w-[38px] h-[38px] rounded-full object-cover"
                     />
                   )}

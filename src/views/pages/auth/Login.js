@@ -24,20 +24,34 @@ const Login = () => {
   }, [user, navigate]);
 
   // login form submit
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading, data, isSuccess, isError, error }] =
+    useLoginMutation();
   const loginSubmit = async (data) => {
-    await login(data).then((res) => {
-      if (res.data) {
-        setMessage("");
-        localStorage.setItem("user", JSON.stringify(res.data));
-        navigate("/");
-      }
+    await login(data);
 
-      if (res.error) {
-        setMessage(res?.error?.data?.message);
-      }
-    });
+    // .then((res) => {
+    //   if (res.data) {
+    //     setMessage("");
+    //     localStorage.setItem("user", JSON.stringify(res.data));
+    //     navigate("/");
+    //   }
+
+    //   if (res.error) {
+    //     setMessage(res?.error?.data?.message);
+    //   }
+    // });
   };
+
+  useEffect(() => {
+    setMessage("");
+    if (isSuccess) {
+      navigate("/");
+    }
+    if (isError) {
+      const { data } = error || {};
+      setMessage(data?.message);
+    }
+  }, [isSuccess, data, isError, error, navigate]);
 
   return (
     <Wrapper title="Log In • Instagram">

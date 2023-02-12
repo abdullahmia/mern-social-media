@@ -13,11 +13,13 @@ import Wrapper from "../../components/custom/Wrapper";
 
 const Profile = () => {
   const { username } = useParams();
-  const { data, isLoading, isError, error } = useUserDataQuery(username);
+  const { data, isLoading, isError } = useUserDataQuery(username);
   let user = data?.user;
   let posts = data?.posts;
   let localUser = getUser();
-  console.log("data: ", isError, error);
+
+  console.log(user);
+
   return (
     <Wrapper
       title={
@@ -42,7 +44,7 @@ const Profile = () => {
               <div className="flex lg:items-center items-start lg:gap-28 gap-8 lg:px-14 px-3 lg:py-8 py-4">
                 <div>
                   <Image
-                    src={user?.image ? user?.image : "user_cowfsl"}
+                    src={user?.image ? user?.image : "social-media/user_wxjx6f"}
                     classname="lg:w-[150px] lg:h-[150px] w-[77px] h-[77px] rounded-full object-cover"
                   />
                 </div>

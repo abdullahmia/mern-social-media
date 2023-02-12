@@ -2,6 +2,11 @@ import { apiSlice } from "../api/apiSlice";
 
 export const postApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // get posts
+    getPosts: builder.query({
+      query: () => "/post",
+    }),
+
     // new post
     addPost: builder.mutation({
       query: (body) => {
@@ -11,13 +16,20 @@ export const postApi = apiSlice.injectEndpoints({
           body,
         };
       },
-      invalidatesTags: ["posts"],
-    }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const resultAction = await queryFulfilled;
+          const { post } = resultAction.data || {};
 
-    // get posts
-    getPosts: builder.query({
-      query: () => "/post",
-      providesTags: ["posts"],
+          dispatch(
+            apiSlice.util.updateQueryData("getPosts", undefined, (draft) => {
+              draft.unshift(post);
+            })
+          );
+        } catch (err) {
+          // nothing do
+        }
+      },
     }),
 
     // like a post
@@ -28,7 +40,24 @@ export const postApi = apiSlice.injectEndpoints({
           method: "PATCH",
         };
       },
-      invalidatesTags: ["posts"],
+      async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
+        console.log("onQueryStarted", arg);
+        const userId = getState()?.auth?.user?._id;
+        let patchResult = dispatch(
+          apiSlice.util.updateQueryData("getPosts", undefined, (draft) => {
+            let post = draft.find((post) => post._id === arg);
+            if (post) {
+              post.likes.push(userId);
+            }
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          patchResult.undo();
+        }
+      },
     }),
 
     // unlike a post
@@ -39,7 +68,23 @@ export const postApi = apiSlice.injectEndpoints({
           method: "PATCH",
         };
       },
-      invalidatesTags: ["posts"],
+      async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
+        const userId = getState()?.auth?.user?._id;
+        let patchResult = dispatch(
+          apiSlice.util.updateQueryData("getPosts", undefined, (draft) => {
+            let post = draft.find((post) => post._id === arg);
+            if (post) {
+              post.likes = post.likes.filter((id) => id !== userId);
+            }
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          patchResult.undo();
+        }
+      },
     }),
   }),
 });

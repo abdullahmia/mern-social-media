@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiLockAlt } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useForgotPasswordEmailSendMutation } from "../../../features/auth/authApi";
 import Loader from "../../components/common/Loader";
 import Wrapper from "../../components/custom/Wrapper";
@@ -9,26 +9,42 @@ import Wrapper from "../../components/custom/Wrapper";
 const PasswordReset = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [message, setMessage] = useState("");
   const { register, handleSubmit, reset } = useForm();
 
-  const [forgotPasswordEmailSend, { isLoading }] =
-    useForgotPasswordEmailSendMutation();
+  const location = useLocation();
+  const urlMessage = location.search.split("=")[1];
+
+  useEffect(() => {
+    if (urlMessage === "invalid") {
+      setMessage("Invalid or expired token");
+    }
+  }, [urlMessage]);
+
+  const [
+    forgotPasswordEmailSend,
+    { isLoading, isError, data, isSuccess, error: responseError },
+  ] = useForgotPasswordEmailSendMutation();
   // login form submit handler
   const passwordResetSubmit = async (data) => {
-    console.log(data);
-    // reset();
-    await forgotPasswordEmailSend(data).then((res) => {
-      if (res?.data) {
-        setSuccess(res?.data?.message);
-        setError("");
-        reset();
-      }
-      if (res?.error) {
-        setError(res?.error?.data?.message);
-        setSuccess("");
-      }
-    });
+    forgotPasswordEmailSend(data);
   };
+
+  useEffect(() => {
+    setError("");
+    setSuccess("");
+
+    if (isSuccess) {
+      setSuccess(data.message);
+      reset();
+    }
+
+    if (isError) {
+      const { data } = responseError || {};
+      setError(data.message);
+    }
+  }, [isSuccess, data, isError, responseError, reset]);
+
   return (
     <Wrapper title="Reset Password • Instagram">
       <div className="w-full h-screen flex justify-center items-center">
@@ -46,6 +62,12 @@ const PasswordReset = () => {
                 to get back into your account.
               </p>
             </div>
+
+            {message && (
+              <p className="text-[14px] my-5 text-[#b63131] px-2 text-center">
+                {message}
+              </p>
+            )}
 
             {error && (
               <p className="text-[14px] my-5 text-[#b63131] px-2 text-center">

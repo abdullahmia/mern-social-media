@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { userLoggedIn } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,6 +10,21 @@ export const authApi = apiSlice.injectEndpoints({
           method: "POST",
           body: content,
         };
+      },
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const { data } = await queryFulfilled;
+          const { user, token } = data || {};
+
+          // update the store
+          dispatch(userLoggedIn({ user, token }));
+
+          // save the token to local storage
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+        } catch (err) {
+          // do nothing
+        }
       },
     }),
 

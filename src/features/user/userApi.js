@@ -15,6 +15,19 @@ export const userApi = apiSlice.injectEndpoints({
           body: body,
         };
       },
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        let patchResult = dispatch(
+          apiSlice.util.updateQueryData("userData", arg.username, (draft) => {
+            draft.user = { ...draft.user, ...arg };
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          patchResult.undo();
+        }
+      },
     }),
 
     // update profile picture

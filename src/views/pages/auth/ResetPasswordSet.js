@@ -1,4 +1,5 @@
-import { useState } from "react";
+import jwt_decode from "jwt-decode";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiLockAlt } from "react-icons/bi";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -14,24 +15,36 @@ const ResetPasswordSet = () => {
   const { user, token } = useParams();
   const navigate = useNavigate();
 
-  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const { exp, id: userId } = jwt_decode(token);
+
+  useEffect(() => {
+    // if user and token userid is same and token is not expired
+    if (user !== userId || exp < Date.now() / 1000) {
+      navigate("/password-reset?message=invalid");
+    }
+  }, [user, userId, exp, navigate]);
+
+  const [
+    resetPassword,
+    { isLoading, isSuccess, data, isError, error: responseError },
+  ] = useResetPasswordMutation();
   // set new password handler
   const resetPasswordHandler = async (data) => {
-    await resetPassword({ user: user, token: token, body: data }).then(
-      (res) => {
-        if (res?.data) {
-          setSuccess(res?.data?.message);
-          setError("");
-          reset();
-          navigate("/login");
-        }
-        if (res?.error) {
-          setError(res?.error?.data?.message);
-          setSuccess("");
-        }
-      }
-    );
+    resetPassword({ user: user, token: token, body: data });
   };
+
+  useEffect(() => {
+    if (isError) {
+      const { data } = responseError || {};
+      setError(data.message);
+    }
+
+    if (isSuccess) {
+      // if success then redirect to login page with success message
+      navigate("/login");
+    }
+  }, [isError, responseError, isSuccess, data, navigate]);
+
   return (
     <Wrapper title="Reset Password • Instagram">
       <div className="w-full h-screen flex justify-center items-center">
@@ -85,8 +98,7 @@ const ResetPasswordSet = () => {
                 type="submit"
                 className="flex items-center gap-2 justify-center capitalize text-sm bg-blue-500 text-white py-1.5 rounded"
               >
-                {isLoading && <Loader />}
-                set new password
+                {isLoading ? <Loader /> : "set new password"}
               </button>
             </form>
           </div>

@@ -1,16 +1,16 @@
 import moment from "moment";
 import { AiOutlineEllipsis } from "react-icons/ai";
-import getUser from "../../../helper/user";
 // prettier-ignore
 import { useLikePostMutation, useUnlikePostMutation } from '../../../features/post/postApi';
 
+import { useSelector } from "react-redux";
 import Image from "./Image";
 
 const Post = ({ post = {} }) => {
-  const localUser = getUser();
-  const isLiked = post?.likes?.find((like) => like?._id === localUser?.id)
-    ? true
-    : false;
+  const { user } = useSelector((state) => state.auth);
+
+  const isLiked = post?.likes?.includes(user?._id);
+
   const [likePost] = useLikePostMutation();
   const [unlikePost] = useUnlikePostMutation();
 
@@ -30,7 +30,11 @@ const Post = ({ post = {} }) => {
         <div className="flex items-center gap-3">
           <div>
             <Image
-              src={post?.user?.image ? post?.user?.image : "user_cowfsl"}
+              src={
+                post?.user?.image
+                  ? post?.user?.image
+                  : "social-media/user_wxjx6f"
+              }
               classname="w-[32px] h-[32px] rounded-full"
             />
           </div>

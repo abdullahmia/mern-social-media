@@ -1,6 +1,6 @@
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BsEmojiSmile } from "react-icons/bs";
 import { FiX } from "react-icons/fi";
@@ -24,7 +24,7 @@ const PostInput = ({ setShowModal, image, setImage }) => {
     setCaption(caption + emoji);
   };
 
-  const [addPost, { isLoading }] = useAddPostMutation();
+  const [addPost, { isLoading, data, isSuccess }] = useAddPostMutation();
 
   // new post
   const addNewPost = async (e) => {
@@ -47,6 +47,12 @@ const PostInput = ({ setShowModal, image, setImage }) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data);
+    }
+  }, [isSuccess, data]);
 
   return (
     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">

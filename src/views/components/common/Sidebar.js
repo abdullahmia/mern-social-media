@@ -1,19 +1,10 @@
 import { Link } from "react-router-dom";
 import { useSuggestionUsersQuery } from "../../../features/user/userApi";
-import getUser from "../../../helper/user";
 import SuggestedProfile from "../common/SuggestedProfile";
 import SdiebarProfile from "./SdiebarProfile";
 
 const Sidebar = () => {
   const { data: suggestedUsers } = useSuggestionUsersQuery();
-  const userData = getUser();
-
-  // users filter if user is not login user
-  const filterUsers = (user) => {
-    if (user._id !== userData.id) {
-      return user;
-    }
-  };
 
   return (
     <div className="bg-transparent">
@@ -38,7 +29,7 @@ const Sidebar = () => {
         </div>
         <div className="px-3">
           {" "}
-          {suggestedUsers?.users?.filter(filterUsers).map((user, key) => (
+          {suggestedUsers?.map((user, key) => (
             <SuggestedProfile key={key} user={user} />
           ))}
         </div>

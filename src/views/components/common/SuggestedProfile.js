@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import getUser from "../../../helper/user";
 // prettier-ignore
 import { useFollowMutation, useUnfollowMutation } from "../../../features/user/userApi";
 
+import { useSelector } from "react-redux";
 import Image from "./Image";
 
 const SuggestedProfile = ({ user }) => {
-  let image = user?.image ? user?.image : "user_cowfsl";
-  let currentUser = getUser();
+  let image = user?.image ? user?.image : "social-media/user_wxjx6f";
+  const { user: currentUser } = useSelector((state) => state.auth);
 
   // follow user
   const [follow] = useFollowMutation();
@@ -46,7 +46,7 @@ const SuggestedProfile = ({ user }) => {
         </div>
       </div>
       <div>
-        {user?.followers.includes(currentUser.id) ? (
+        {user?.followers.includes(currentUser._id) ? (
           <button
             onClick={unfollowHandler}
             className="text-[12px] font-[700] text-[#0095f6] capitalize"
