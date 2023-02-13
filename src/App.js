@@ -6,6 +6,7 @@ import Main from "./views/pages/Main";
 const App = () => {
   const [colorTheme] = useDarkTheme();
   const authCheck = useAuthCheck();
+
   return authCheck ? (
     <>
       <div className="background">

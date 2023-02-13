@@ -54,6 +54,19 @@ export const userApi = apiSlice.injectEndpoints({
           method: "PATCH",
         };
       },
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        
+        try {
+          const {user} = await queryFulfilled;
+          dispatch(apiSlice.util.updateQueryData('userData', user._id, (draft) => {
+            draft.user.followers = [...user.followers]
+          }));
+
+        } catch (err) {
+          
+        }
+
+      }
     }),
     // Follow a user by id
     unfollow: builder.mutation({

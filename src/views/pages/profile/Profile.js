@@ -1,6 +1,6 @@
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useUserDataQuery } from "../../../features/user/userApi";
-import getUser from "../../../helper/user";
 import Footer from "../../components/common/Footer";
 import Header from "../../components/common/Header";
 import Highlight from "../../components/common/Highlight";
@@ -16,9 +16,10 @@ const Profile = () => {
   const { data, isLoading, isError } = useUserDataQuery(username);
   let user = data?.user;
   let posts = data?.posts;
-  let localUser = getUser();
 
   console.log(user);
+
+  const { user: localUser } = useSelector((state) => state.auth);
 
   return (
     <Wrapper
@@ -53,7 +54,7 @@ const Profile = () => {
                     <h2 className="text-[28px] text-[#262626] font-[300] dark:text-gray-300">
                       {user?.username}
                     </h2>
-                    {localUser.id === user?._id ? (
+                    {localUser._id === user?._id ? (
                       <Link
                         to={"/account/edit"}
                         className="text-[14px] text-[#262626] font-[600] border dark:border-gray-600 dark:text-gray-400 px-2 py-2 rounded lg:block hidden"
