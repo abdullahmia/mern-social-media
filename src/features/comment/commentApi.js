@@ -13,7 +13,7 @@ export const commentApi = apiSlice.injectEndpoints({
                     const result = await queryFulfilled;
                     const comment = result?.data;
                     dispatch(apiSlice.util.updateQueryData("getPosts", undefined, (draft) => {
-                        let post = draft.find((post) => post._id === comment.post);
+                        let post = draft.find((post) => post._id === comment.post._id);
                         if (post) {
                             post.comments += 1;
                         }

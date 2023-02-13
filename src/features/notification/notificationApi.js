@@ -11,14 +11,15 @@ export const notificaitonApi = apiSlice.injectEndpoints({
 
                 // get all notifications
                 socket.on("notification", (notification) => {
-                    console.log(notification);
                     if (notification.recipient._id === user._id) {
                         updateCachedData((draft) => {
                             draft.notifications.unshift(notification);
                             draft.unreadNotifications += 1;
                         })
+                        
                     }
                 });
+
             },
         }),
         readNotifications: builder.mutation({
