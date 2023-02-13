@@ -1,9 +1,12 @@
 import { Popover } from "@headlessui/react";
 import { Picker } from "emoji-mart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from 'react-hot-toast';
+import { useAddCommentMutation } from "../../../features/comment/commentApi";
+import Loader from "../common/loaders/Loader";
 
-const CommentInput = () => {
-    const [commentText, setCommentText] = useState("");
+const CommentInput = ({post}) => {
+  const [commentText, setCommentText] = useState("");
 
   // for adding emojis
   const addEmoji = (e) => {
@@ -13,13 +16,27 @@ const CommentInput = () => {
     let emoji = String.fromCodePoint(...codesArray);
     setCommentText(commentText + emoji);
   };
-    
-    console.log(commentText);
+  
+  // add comment handler
+  const [addComment, {isLoading, isSuccess, isError, data}] = useAddCommentMutation();
+  const addCommentHandler = (e) => {
+    e.preventDefault();
+    if (!commentText) return;
+    addComment({ post, comment: commentText });
+  }
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Something went wrong!');
+    }
+    if (isSuccess) {
+      setCommentText("");
+    }
+  }, [isError, isSuccess, data])
 
   return (
-    <div className="px-3 w-full flex items-center justify-between border-t dark:border-[#2d343b] py-3 mt-3">
+    <form onSubmit={addCommentHandler} className="px-3 w-full flex items-center justify-between border-t dark:border-[#2d343b] py-3 mt-3">
         <div className="flex items-center gap-3">
-
               <Popover className="mt-1 relative">
                   <Popover.Button className="relative focus:outline-none">
                       <svg
@@ -39,13 +56,6 @@ const CommentInput = () => {
                   <Popover.Panel className="absolute top-[-379px] left-[-14px] z-10 mt-2 w-full">
                     <Picker
                       onSelect={addEmoji}
-                      style={{
-                        // position: "absolute",
-                        //   marginTop: "400px",
-                        // marginLeft: -40,
-                        // maxWidth: "400px",
-                        // borderRadius: "20px",
-                      }}
                       theme="dark"
                     />
                   </Popover.Panel>
@@ -61,10 +71,10 @@ const CommentInput = () => {
         </div>
         <div>
           <button className="capitalize text-[14px] text-[#0095f6] font-[700]">
-            post
+          {isLoading ? <Loader /> : 'Post'}
           </button>
         </div>
-      </div>
+    </form>
   )
 }
 

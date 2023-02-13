@@ -7,7 +7,7 @@ import playStore from "../../../assets/googleplay.png";
 import loginImg from "../../../assets/insta.png";
 import logo from "../../../assets/logo.png";
 import { useLoginMutation } from "../../../features/auth/authApi";
-import Loader from "../../components/common/Loader";
+import Loader from "../../components/common/loaders/Loader";
 import Wrapper from "../../components/custom/Wrapper";
 
 const Login = () => {
@@ -29,17 +29,6 @@ const Login = () => {
   const loginSubmit = async (data) => {
     await login(data);
 
-    // .then((res) => {
-    //   if (res.data) {
-    //     setMessage("");
-    //     localStorage.setItem("user", JSON.stringify(res.data));
-    //     navigate("/");
-    //   }
-
-    //   if (res.error) {
-    //     setMessage(res?.error?.data?.message);
-    //   }
-    // });
   };
 
   useEffect(() => {

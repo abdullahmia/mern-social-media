@@ -179,14 +179,14 @@ const Post = ({ post = {} }) => {
           </span>
         </div>
         <h3 className="text-[14px] text-[#8e8e8e] font-[400] mt-2">
-          View all {post?.comments?.length} comments
+          View all {post?.comments} comments
         </h3>
         <p className="uppercase text-[10px] text-[#8e8e8e] font-[400] mt-2">
           {moment(post.createAt).format("MMM Do YY")}
           {/* 11 hours ago */}
         </p>
       </div>
-      <CommentInput />
+      <CommentInput post={post?._id} />
     </div>
   );
 };

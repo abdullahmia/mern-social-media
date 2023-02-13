@@ -6,7 +6,7 @@ import facebook from "../../../assets/facebook.png";
 import playStore from "../../../assets/googleplay.png";
 import logo from "../../../assets/logo.png";
 import { useRegisterUserMutation } from "../../../features/auth/authApi";
-import Loader from "../../components/common/Loader";
+import Loader from "../../components/common/loaders/Loader";
 import Wrapper from "../../components/custom/Wrapper";
 
 const Signup = () => {

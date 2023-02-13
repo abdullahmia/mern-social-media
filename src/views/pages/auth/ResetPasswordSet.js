@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { BiLockAlt } from "react-icons/bi";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useResetPasswordMutation } from "../../../features/auth/authApi";
-import Loader from "../../components/common/Loader";
+import Loader from "../../components/common/loaders/Loader";
 import Wrapper from "../../components/custom/Wrapper";
 
 const ResetPasswordSet = () => {

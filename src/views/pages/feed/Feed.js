@@ -1,7 +1,7 @@
 import { useGetPostsQuery } from "../../../features/post/postApi";
 import { useSuggestionUsersQuery } from "../../../features/user/userApi";
 import Header from "../../components/common/Header";
-import PageLoader from "../../components/common/loader/PageLoader";
+import PageLoader from "../../components/common/loaders/PageLoader";
 import Post from "../../components/common/Post";
 import Sidebar from "../../components/common/Sidebar";
 import Wrapper from "../../components/custom/Wrapper";
@@ -9,6 +9,7 @@ import Wrapper from "../../components/custom/Wrapper";
 const Feed = () => {
   const { data: posts, isLoading: postLoading } = useGetPostsQuery();
   const { isLoading: suggestedLoading } = useSuggestionUsersQuery();
+
   return (
     <Wrapper title={"Instagram"}>
       {postLoading && suggestedLoading ? (

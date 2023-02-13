@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { usePasswordChangeMutation } from "../../../features/auth/authApi";
-import Loader from "../../components/common/Loader";
+import Loader from "../../components/common/loaders/Loader";
 import AccountWrapper from "../../components/custom/AccountWrapper";
 
 const PasswordChange = () => {

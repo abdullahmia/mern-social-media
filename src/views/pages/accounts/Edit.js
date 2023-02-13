@@ -5,7 +5,7 @@ import getUser from "../../../helper/user";
 // prettier-ignore
 import { useUpdateProfileMutation, useUpdateProfilePictureMutation, useUserDataQuery } from "../../../features/user/userApi";
 import Image from "../../components/common/Image";
-import Loader from "../../components/common/Loader";
+import Loader from "../../components/common/loaders/Loader";
 import AccountWrapper from "../../components/custom/AccountWrapper";
 
 const Edit = () => {

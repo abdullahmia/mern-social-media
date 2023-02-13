@@ -7,7 +7,7 @@ import { FiX } from "react-icons/fi";
 import { useAddPostMutation } from "../../../../../features/post/postApi";
 import getUser from "../../../../../helper/user";
 import Image from "../../Image";
-import Loader from "../../Loader";
+import Loader from "../../loaders/Loader";
 
 const PostInput = ({ setShowModal, image, setImage }) => {
   const [caption, setCaption] = useState("");

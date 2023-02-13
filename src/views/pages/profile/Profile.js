@@ -5,7 +5,7 @@ import Footer from "../../components/common/Footer";
 import Header from "../../components/common/Header";
 import Highlight from "../../components/common/Highlight";
 import Image from "../../components/common/Image";
-import Loader from "../../components/common/Loader";
+import Loader from "../../components/common/loaders/Loader";
 import NotFound from "../../components/common/NotFound";
 import Posts from "../../components/common/profile/Posts";
 import Follow from "../../components/custom/Follow";
