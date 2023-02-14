@@ -1,4 +1,5 @@
-import { Popover } from "@headlessui/react";
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment } from 'react';
 import { useGetAllNotificationsQuery, useReadNotificationsMutation } from "../../../../features/notification/notificationApi";
 import Notification from "./Notification";
 
@@ -50,13 +51,26 @@ const Notifications = () => {
               {unreadNotifications > 0 && (<span className="absolute -top-1 -right-1 bg-red-500 rounded-full text-xs text-white w-4 h-4 flex items-center justify-center">{unreadNotifications}</span>)}
           </Popover.Button>
 
-          <Popover.Panel className="border absolute right-[0px] top-[36px] z-10 mt-2 w-[330px] bg-white dark:bg-gray-700 dark:border-[#2d343b]    ">
-              <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-800">
-                  <p className="text-sm font-semibold">Notifications</p>
-                  <button disabled={unreadNotifications === 0 && true} className="text-sm p-1 rounded dark:hover:bg-gray-600 dark:hover:text-white text-[#262626] dark:text-gray-300">Mark all as read</button>
-              </div>
-              {renderNotifications()}
-          </Popover.Panel>
+          <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+          >
+              <Popover.Panel className="border absolute right-[0px] top-[36px] z-10 mt-2 w-[330px] bg-white dark:bg-gray-700 dark:border-[#2d343b]    ">
+                  <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-800">
+                      <p className="text-sm font-semibold">Notifications</p>
+                      <button disabled={unreadNotifications === 0 && true} className="text-sm p-1 rounded dark:hover:bg-gray-600 dark:hover:text-white text-[#262626] dark:text-gray-300">Mark all as read</button>
+                  </div>
+                  {renderNotifications()}
+              </Popover.Panel>
+            
+          </Transition>
+
+          
       </Popover>
   )
 }

@@ -55,7 +55,7 @@ const Header = () => {
                 ></path>
               </svg>
             </Link>
-            <Link to="/chat">
+            <Link to="/inbox">
               <svg
                 aria-label="Messenger"
                 className="dark:text-gray-200"

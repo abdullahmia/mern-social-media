@@ -1,7 +1,7 @@
 import moment from "moment";
 import { AiOutlineEllipsis } from "react-icons/ai";
 // prettier-ignore
-import { useLikePostMutation, useUnlikePostMutation } from '../../../features/post/postApi';
+import { useLikePostMutation } from '../../../features/post/postApi';
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -15,16 +15,10 @@ const Post = ({ post = {} }) => {
   const isLiked = post?.likes?.includes(user?._id);
 
   const [likePost] = useLikePostMutation();
-  const [unlikePost] = useUnlikePostMutation();
 
   // like handler
   const likePostHandler = async () => {
     if (!isLiked) await likePost(post?._id);
-  };
-
-  // unlike handler
-  const unlikePostHandler = async () => {
-    await unlikePost(post?._id);
   };
 
   return (

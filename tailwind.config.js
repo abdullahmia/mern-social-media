@@ -7,6 +7,7 @@ module.exports = {
       screens: {
         desktop: "930px",
       },
+      center: true
     },
   },
   plugins: [],

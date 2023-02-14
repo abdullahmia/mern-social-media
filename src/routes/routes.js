@@ -12,6 +12,8 @@ import Profile from "../views/pages/profile/Profile";
 // Acounts routes
 import Edit from "../views/pages/accounts/Edit";
 import PasswordChange from "../views/pages/auth/PasswordChange";
+import Direct from "../views/pages/inbox/Direct";
+
 
 export const routes = [
   {
@@ -27,6 +29,11 @@ export const routes = [
   {
     path: "/:username",
     element: Profile,
+    role: ["user"],
+  },
+  {
+    path: "/inbox",
+    element: Direct,
     role: ["user"],
   },
   {

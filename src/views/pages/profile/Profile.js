@@ -17,8 +17,6 @@ const Profile = () => {
   let user = data?.user;
   let posts = data?.posts;
 
-  console.log(user);
-
   const { user: localUser } = useSelector((state) => state.auth);
 
   return (
