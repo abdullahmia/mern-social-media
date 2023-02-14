@@ -6,6 +6,9 @@ export const postApi = apiSlice.injectEndpoints({
     getPosts: builder.query({
       query: () => "/post",
     }),
+    getPost: builder.query({
+      query: (postId) => `/post/${postId}`,
+    }),
 
     // new post
     addPost: builder.mutation({
@@ -41,7 +44,6 @@ export const postApi = apiSlice.injectEndpoints({
         };
       },
       async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
-        console.log("onQueryStarted", arg);
         const userId = getState()?.auth?.user?._id;
         let patchResult = dispatch(
           apiSlice.util.updateQueryData("getPosts", undefined, (draft) => {
@@ -52,10 +54,15 @@ export const postApi = apiSlice.injectEndpoints({
           })
         );
 
+        let patchResult2 = dispatch(apiSlice.util.updateQueryData('getPost', arg, draft => {
+          draft.post.likes.push(userId)
+        }))
+
         try {
           await queryFulfilled;
         } catch (err) {
           patchResult.undo();
+          patchResult2.undo();
         }
       },
     }),
@@ -79,10 +86,15 @@ export const postApi = apiSlice.injectEndpoints({
           })
         );
 
+        let patchResult2 = dispatch(apiSlice.util.updateQueryData('getPost', arg, draft => {
+          draft.post.likes = draft.post.likes.filter(id => id !== userId)
+        }))
+
         try {
           await queryFulfilled;
         } catch (err) {
           patchResult.undo();
+          patchResult2.undo();
         }
       },
     }),
@@ -94,4 +106,5 @@ export const {
   useGetPostsQuery,
   useLikePostMutation,
   useUnlikePostMutation,
+  useGetPostQuery
 } = postApi;

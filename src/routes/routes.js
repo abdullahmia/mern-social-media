@@ -20,7 +20,7 @@ export const routes = [
     role: ["user"],
   },
   {
-    path: "/p/:id",
+    path: "/p/:postId",
     element: Post,
     role: ["user"],
   },

@@ -18,6 +18,12 @@ export const commentApi = apiSlice.injectEndpoints({
                             post.comments += 1;
                         }
                     }))
+
+
+                    dispatch(apiSlice.util.updateQueryData("getPost", comment.post._id, (draft) => {
+                        draft.comments.unshift(comment);
+                    }))
+
                 } catch (err) {
                     // nothing do
                 }
