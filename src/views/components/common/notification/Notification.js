@@ -12,13 +12,13 @@ const Notification = ({notification}) => {
           </div>
           <div className="flex-1">
             {
-                type === 'comment' && <Link to="/" className="text-sm py-2 dark:hover:bg-gray-600 dark:hover:text-white text-[#262626] dark:text-gray-300"><b>{username}</b> commented on your post. <span>{moment(createdAt).fromNow()}</span> </Link>
+                type === 'comment' && <div className="text-sm py-2 dark:hover:bg-gray-600 dark:hover:text-white text-[#262626] dark:text-gray-300"><b>{username}</b> commented on your post. <span>{moment(createdAt).fromNow()}</span> </div>
             }
             {
-                type === 'like' && <Link to="/" className="text-sm py-2 dark:hover:bg-gray-600 dark:hover:text-white text-[#262626] dark:text-gray-300"><b>{username}</b> liked your post. <span>{moment(createdAt).fromNow()}</span> </Link>
+                type === 'like' && <div className="text-sm py-2 dark:hover:bg-gray-600 dark:hover:text-white text-[#262626] dark:text-gray-300"><b>{username}</b> liked your post. <span>{moment(createdAt).fromNow()}</span> </div>
             }
             {
-                type === 'follow' && <Link to="/" className="text-sm py-2 dark:hover:bg-gray-600 dark:hover:text-white text-[#262626] dark:text-gray-300"><b>{username}</b> started following you. <span>{moment(createdAt).fromNow()}</span> </Link>
+                type === 'follow' && <div className="text-sm py-2 dark:hover:bg-gray-600 dark:hover:text-white text-[#262626] dark:text-gray-300"><b>{username}</b> started following you. <span>{moment(createdAt).fromNow()}</span> </div>
             }
               
           </div>

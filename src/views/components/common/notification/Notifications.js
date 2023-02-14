@@ -31,6 +31,7 @@ const Notifications = () => {
         readNotifications()
     }
 
+
   return (
       <Popover className="mt-1 relative">
           <Popover.Button onClick={readAllNotificationsHandler} className="relative focus:outline-none">
