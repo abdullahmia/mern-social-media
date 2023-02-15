@@ -7,10 +7,10 @@ const Direct = () => {
   return (
       <Wrapper title="Inbox">
           <div className="dark:bg-[#121212]">
-              <div class="h-screen w-full flex flex-col border overflow-hidden dark:border-[#2d343b]">
-                <Header />
-                  <div class="container my-6 border flex-1 flex flex-col dark:border-[#2d343b]">
-                      <main class="flex-grow flex flex-row min-h-0">
+              <div class="h-screen w-full flex overflow-hidden ">
+                  <div class="border flex-1 flex flex-col dark:border-[#2d343b]">
+                      <Header />
+                      <main class="container my-6 flex-grow flex flex-row min-h-0 border dark:border-[#2d343b]">
                           <Sidebar />
                           <ChatBody />
                       </main>
@@ -23,3 +23,5 @@ const Direct = () => {
 }
 
 export default Direct
+
+
