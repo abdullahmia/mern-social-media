@@ -1,27 +1,66 @@
+import { Popover, Transition } from "@headlessui/react";
+import { Picker } from "emoji-mart";
+import { Fragment, useState } from "react";
+import { BiHeart, BiImageAlt } from "react-icons/bi";
+import { BsEmojiSmile } from "react-icons/bs";
+
 const Options = () => {
+    const [message, setMessage] = useState("");
+
+    // for adding emojis
+    const addEmoji = (e) => {
+        let sym = e.unified.split("-");
+        let codesArray = [];
+        sym.forEach((el) => codesArray.push("0x" + el));
+        let emoji = String.fromCodePoint(...codesArray);
+        setMessage(message + emoji);
+    };
+
   return (
-      <div class="chat-footer flex-none">
-          <div class="flex flex-row items-center p-4">
-              
-              <div class="relative flex-grow">
-                  <label>
-                      <button type="button" class="absolute top-0 right-0 mt-2 mr-3 flex flex-shrink-0 focus:outline-none block text-blue-600 hover:text-blue-700 w-6 h-6">
-                          <svg viewBox="0 0 20 20" class="w-full h-full fill-current">
-                              <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 3a6 6 0 0 1-11.32 0h11.32z" />
-                          </svg>
-                      </button>
-                      
-                      <input class="rounded-full py-2 pl-3 pr-10 w-full border borderfocus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
-                          type="text" value="" placeholder="Aa" />
-                      
-                  </label>
+      <div class="chat-footer flex-none mb-5">
+          <form class="flex flex-row items-center gap-3 border mx-3 px-4 py-1 rounded-full dark:border-[#2d343b]">
+              <div className="">
+                  <Popover className="mt-1 relative">
+                      <Popover.Button className="relative focus:outline-none dark:text-gray-300">
+                          <BsEmojiSmile size={26} />
+                      </Popover.Button>
+
+                      <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                      >
+                          <Popover.Panel className="absolute top-[-367px] left-[7px] z-10 w-full">
+                              <Picker
+                                  onSelect={addEmoji}
+                                  theme="dark"
+                              />
+                          </Popover.Panel>
+                      </Transition>
+                  </Popover>
               </div>
-              <button type="button" class="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-6 h-6">
-                  <svg viewBox="0 0 20 20" class="w-full h-full fill-current">
-                      <path d="M11.0010436,0 C9.89589787,0 9.00000024,0.886706352 9.0000002,1.99810135 L9,8 L1.9973917,8 C0.894262725,8 0,8.88772964 0,10 L0,12 L2.29663334,18.1243554 C2.68509206,19.1602453 3.90195042,20 5.00853025,20 L12.9914698,20 C14.1007504,20 15,19.1125667 15,18.000385 L15,10 L12,3 L12,0 L11.0010436,0 L11.0010436,0 Z M17,10 L20,10 L20,20 L17,20 L17,10 L17,10 Z" />
-                  </svg>
-              </button>
-          </div>
+              <div className="flex items-center flex-1">
+                  <input
+                      type="text"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Message..."
+                      className="w-full py-2 text-[14px] text-[#8e8e8e] font-[400] border-none focus:outline-none  bg-transparent"
+                  />
+                  <div className="ml-auto flex items-center gap-2">
+                      <button type="button" className="dark:text-gray-300">
+                          <BiImageAlt size={27} />
+                      </button>
+                      <button className="dark:text-gray-300">
+                          <BiHeart size={27} />
+                      </button>
+                  </div>
+              </div>
+          </form>
       </div>
   )
 }

@@ -31,7 +31,6 @@ const CommentInput = ({post}) => {
     }
     if (isSuccess) {
       setCommentText("");
-      console.log(data);
     }
   }, [isError, isSuccess, data])
 
