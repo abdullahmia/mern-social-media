@@ -22,7 +22,7 @@ const Post = ({ post = {} }) => {
   };
 
   return (
-    <div className="bg-white border rounded-[8px] dark:bg-[#252a30] dark:border-[#2d343b]">
+    <div className="border rounded-[8px] background dark:border-[#2d343b]">
       <div className="p-3 flex justify-between items-center border-b dark:border-[#2d343b]">
         <div className="flex items-center gap-3">
           <div>

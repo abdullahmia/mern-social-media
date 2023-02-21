@@ -195,7 +195,7 @@ const Header = () => {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-[0px] top-[36px] z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-700">
+                <Menu.Items className="absolute right-[0px] top-[36px] z-10 mt-2 w-56 origin-top-right rounded-md background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  dark:border-[#2d343b]">
                   <div className="py-1">
                     <ul
                       className="py-1 text-sm text-gray-700 dark:text-gray-200"
