@@ -6,9 +6,6 @@ import { useAddConversationMutation } from "../../../../../features/conversation
 const SendMessage = ({ receiver = {}, setIsNewChatOpen }) => {
   const [message, setMessage] = useState('');
 
-  console.log('This is the receiver', receiver)
-
-
   // add conversation handler
   const [addConversation, { isLoading, isSuccess, isError }] = useAddConversationMutation();
   const addConversationHandler = (e) => {
