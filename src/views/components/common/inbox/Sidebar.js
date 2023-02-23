@@ -1,7 +1,11 @@
+import { useGetConversationsQuery } from "../../../../features/conversation/conversationApi";
 import Conversation from "./Conversation";
 import NewChat from "./newChat/NewChat";
 
 const Sidebar = () => {
+
+    const { data: conversations } = useGetConversationsQuery();
+
   return (
       <section class="flex flex-col flex-none overflow-auto w-24 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
           <div class="header p-4 flex flex-row justify-between items-center flex-none border-b dark:border-[#2d343b]">
@@ -10,15 +14,12 @@ const Sidebar = () => {
           </div>
 
           <div class="contacts flex-1 overflow-y-scroll">
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
+
+            {
+                conversations && conversations.map((conversation, key) => (
+                    <Conversation key={key} conversation={conversation} />
+                ))
+            }
           </div>
       </section>
   )

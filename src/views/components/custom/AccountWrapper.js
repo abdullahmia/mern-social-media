@@ -9,7 +9,7 @@ const AccountWrapper = ({ children, title }) => {
       <div>
         <Header />
         <div className="container mx-auto py-6">
-          <div className="border bg-white flex dark:bg-[#1e2227] dark:border-[#2d343b]">
+          <div className="border background flex dark:border-[#2d343b]">
             {/* account page sidebar */}
             <Menu />
             <div>{children}</div>

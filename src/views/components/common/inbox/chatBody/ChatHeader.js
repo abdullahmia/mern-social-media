@@ -1,18 +1,18 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import ProfilePicture from "../../../custom/images/ProfilePicture";
 
-const ChatHeader = () => {
+const ChatHeader = ({receiver}) => {
+    
+    const {fullName, image} = receiver || {};
   return (
       <div class="chat-header px-6 py-3 flex flex-row flex-none justify-between items-center shadow">
           <div class="flex">
               <div class="w-10 h-10 mr-4 relative flex flex-shrink-0">
-                  <img class="shadow-md rounded-full w-full h-full object-cover"
-                      src="https://randomuser.me/api/portraits/women/33.jpg"
-                      alt=""
-                  />
+                  <ProfilePicture src={image} class="shadow-md rounded-full w-full h-full object-cover" />
               </div>
               <div class="text-sm">
-                  <p class="font-bold text-[#262626] dark:text-gray-200">Scarlett Johansson</p>
-                  <p className="text-[#262626] dark:text-gray-400">Active 1h ago</p>
+                  <p class="font-bold text-[#262626] dark:text-gray-200">{fullName}</p>
+                  {/* <p className="text-[#262626] dark:text-gray-400">Active 1h ago</p> */}
               </div>
           </div>
 
@@ -32,4 +32,4 @@ const ChatHeader = () => {
   )
 }
 
-export default ChatHeader
+export default ChatHeader;

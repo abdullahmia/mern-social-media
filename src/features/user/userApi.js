@@ -77,6 +77,12 @@ export const userApi = apiSlice.injectEndpoints({
         };
       },
     }),
+
+    // get followers
+    getFollowers: builder.query({
+      query: () => `/user/followers`,
+    }),
+
   }),
 });
 
@@ -87,4 +93,5 @@ export const {
   useUpdateProfileMutation,
   useUpdateProfilePictureMutation,
   useUserDataQuery,
+  useGetFollowersQuery,
 } = userApi;

@@ -3,8 +3,10 @@ import { Picker } from "emoji-mart";
 import { Fragment, useState } from "react";
 import { BiHeart, BiImageAlt } from "react-icons/bi";
 import { BsEmojiSmile } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { useSendMessageMutation } from "../../../../../features/message/messageApi";
 
-const Options = () => {
+const Options = ({ conversationId, receiver }) => {
     const [message, setMessage] = useState("");
 
     // for adding emojis
@@ -16,9 +18,28 @@ const Options = () => {
         setMessage(message + emoji);
     };
 
+    const {user} = useSelector(state => state.auth);
+
+    // for send message handler
+    const [sendMessage] = useSendMessageMutation();
+
+    const sendMessageHandler = (e) => {
+        e.preventDefault();
+
+        const messageData = {
+            sender: user._id,
+            receiver: receiver._id,
+            text: message,
+        };
+
+        sendMessage({conversationId, body: messageData});
+
+        setMessage('');
+    }
+
   return (
       <div class="chat-footer flex-none mb-5">
-          <form class="flex flex-row items-center gap-3 border mx-3 px-4 py-1 rounded-full dark:border-[#2d343b]">
+          <form onSubmit={sendMessageHandler} class="flex flex-row items-center gap-3 border mx-3 px-4 py-1 rounded-full dark:border-[#2d343b]">
               <div className="">
                   <Popover className="mt-1 relative">
                       <Popover.Button className="relative focus:outline-none dark:text-gray-300">

@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { BiCircle, BiX } from 'react-icons/bi';
+import { useGetFollowersQuery } from '../../../../../features/user/userApi';
 import Image from '../../Image';
 import SendMessage from './SendMessage';
 
@@ -12,6 +13,11 @@ const NewChat = ({isIcon}) => {
   const toggleNewChat = () => {
     setIsNewChatOpen(!isNewChatOpen);
   }
+
+
+  // get user followers
+  const { data: followers } = useGetFollowersQuery();
+
 
   return (
     <div>
@@ -59,11 +65,18 @@ const NewChat = ({isIcon}) => {
                   {/* Search User */}
                   <div className='flex items-center gap-3 mt-2 px-3 text-[#262626] dark:text-gray-100'>
                     <p className='text-xl'>To: </p>
-                    <input type="text" placeholder='Search...' className='background flex-1 py-2 focus:outline-none' />
+                    {user && <div className='flex items-center gap-2'>
+                      <div className='w-8 h-8'>
+                        <Image src={user.image ? user.image : 'social-media/user_wxjx6f'} classname='w-full h-full rounded-full' alt="" />
+                      </div>
+                      <p>{user.username}</p>
+                      <button onClick={() => setUser(null)}><BiX size={25} /></button>
+                    </div>}
+                    {!user && <input type="text" placeholder='Search...' className='background flex-1 py-2 focus:outline-none' />}
                   </div>
 
                   {/* Send Message */}
-                  {user && <SendMessage />}
+                  {user && <SendMessage receiver={user} setIsNewChatOpen={setIsNewChatOpen} />}
 
                   {/* Prfiles */}
                   {
@@ -71,20 +84,25 @@ const NewChat = ({isIcon}) => {
                       <h1 className='text-[#262626] dark:text-gray-200 px-3'>Suggested</h1>
 
                       <div className='mt-4 h-[300px] overflow-y-scroll'>
+                        {
+                          followers && followers.map((follower, key) => (
+                            <div key={key} onClick={() => setUser(follower)} className='py-2 px-3 flex items-center gap-3 hover:bg-gray-100 transition cursor-pointer dark:hover:bg-[#202020]'>
+                              <div className='w-11 h-11'>
+                                <Image src={follower.image ? follower.image : 'social-media/user_wxjx6f'} classname='w-full h-full rounded-full' alt="" />
+                              </div>
+                              <div className='flex flex-1 justify-between items-center text-[#262626] dark:text-gray-100'>
+                                <div>
+                                  <h2>{follower.fullName}</h2>
+                                </div>
+                                <div>
+                                  <button onClick={() => setUser('32afdasdfasdf')}><BiCircle size={25} /></button>
+                                </div>
+                              </div>
+                            </div>
+                          ))
+                        }
 
-                        <div onClick={() => setUser('32afdasdfasdf')} className='py-2 px-3 flex items-center gap-3 hover:bg-gray-100 transition cursor-pointer dark:hover:bg-[#202020]'>
-                          <div className='w-11 h-11'>
-                            <Image src="social-media/user_wxjx6f" classname='w-full h-full rounded-full' alt="" />
-                          </div>
-                          <div className='flex flex-1 justify-between items-center text-[#262626] dark:text-gray-100'>
-                            <div>
-                              <h2>Abir Islam</h2>
-                            </div>
-                            <div>
-                              <button onClick={() => setUser('32afdasdfasdf')}><BiCircle size={25} /></button>
-                            </div>
-                          </div>
-                        </div>
+                        
 
                       </div>
                     </div>

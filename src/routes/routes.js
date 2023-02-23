@@ -13,7 +13,7 @@ import Profile from "../views/pages/profile/Profile";
 import Edit from "../views/pages/accounts/Edit";
 import PasswordChange from "../views/pages/auth/PasswordChange";
 import Direct from "../views/pages/inbox/Direct";
-
+import Inbox from "../views/pages/inbox/Inbox";
 
 export const routes = [
   {
@@ -32,8 +32,13 @@ export const routes = [
     role: ["user"],
   },
   {
-    path: "/inbox",
+    path: "/direct",
     element: Direct,
+    role: ["user"],
+  },
+  {
+    path: "/direct/:conversationId",
+    element: Inbox,
     role: ["user"],
   },
   {

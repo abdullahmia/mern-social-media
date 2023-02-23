@@ -55,7 +55,7 @@ const Header = () => {
                 ></path>
               </svg>
             </Link>
-            <Link to="/inbox">
+            <Link to="/direct">
               <svg
                 aria-label="Messenger"
                 className="dark:text-gray-200"
@@ -277,7 +277,7 @@ const Header = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/"}
+                          to={"/account/edit"}
                           className="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white flex items-center gap-4 text-[#262626] dark:text-gray-300"
                         >
                           <svg
