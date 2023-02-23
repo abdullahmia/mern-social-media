@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { userLoggedOut } from "../../../features/auth/authSlice";
+import ProfilePicture from "../custom/images/ProfilePicture";
 import Switcher from "../custom/Switcher";
-import Image from "./Image";
 import AddPost from "./modals/addPost/AddPost";
 import Notifications from "./notification/Notifications";
 
@@ -180,10 +180,7 @@ const Header = () => {
 
             <Menu as={"div"} className="relative">
               <Menu.Button className="flex">
-                <Image
-                  src={user?.image}
-                  classname="w-[24px] h-[24px] rounded-full object-cover"
-                />
+                <ProfilePicture src={user?.image} className="w-[24px] h-[24px] rounded-full object-cover" />
               </Menu.Button>
 
               <Transition

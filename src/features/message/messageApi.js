@@ -1,9 +1,41 @@
+import toast from 'react-hot-toast';
+import playNotificationSound from "../../utils/NotificationSound";
+import socket from "../../utils/socket";
 import { apiSlice } from "../api/apiSlice";
 
 export const messageApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getMessages: builder.query({
             query: (conversationId) => `/message/${conversationId}`,
+            async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData, dispatch, getState }) {
+                const { user } = getState()?.auth || {};
+
+                socket.on("newMessage", (message) => {
+                    const { conversationId, receiver } = message;
+                    if (receiver._id === user._id) {
+                        updateCachedData((draft) => {
+                            draft.push(message);
+                        })
+
+                        toast.success(`${message.sender.fullName} send you message`);
+
+                        playNotificationSound();
+
+                        // update conversation last message
+                        dispatch(apiSlice.util.updateQueryData('getConversations', undefined, (draft) => {
+                            const conversation = draft.find((conversation) => conversation._id === conversationId);
+                            conversation.lastMessage = message.text;
+
+                            // this conversation is on top
+                            const index = draft.indexOf(conversation);
+                            draft.splice(index, 1);
+                            draft.unshift(conversation);
+
+
+                        }))
+                    }
+                })
+            }
         }),
         sendMessage: builder.mutation({
             query: ({conversationId, body}) => ({
@@ -24,14 +56,27 @@ export const messageApi = apiSlice.injectEndpoints({
                     text: body.text,
                 }
 
-                let patchResult = dispatch(apiSlice.util.updateQueryData('getMessages', conversationId, (draft) => {
+                let messagePatch = dispatch(apiSlice.util.updateQueryData('getMessages', conversationId, (draft) => {
                     draft.push(message);
+                }))
+
+
+                const conversationPatch = dispatch(apiSlice.util.updateQueryData('getConversations', undefined, (draft) => {
+                    const conversation = draft.find((conversation) => conversation._id === conversationId);
+                    conversation.lastMessage = body.text;
+
+                    // this conversation is on top
+                    const index = draft.indexOf(conversation);
+                    draft.splice(index, 1);
+                    draft.unshift(conversation);
+
                 }))
 
                 try {
                     await queryFulfilled;
                 } catch {
-                    patchResult.undo();
+                    conversationPatch.undo();
+                    messagePatch.undo();
                 }
             },
         }),

@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import getUser from "../../../helper/user";
 // prettier-ignore
+import { useSelector } from "react-redux";
 import { useUpdateProfileMutation, useUpdateProfilePictureMutation, useUserDataQuery } from "../../../features/user/userApi";
-import Image from "../../components/common/Image";
 import Loader from "../../components/common/loaders/Loader";
 import AccountWrapper from "../../components/custom/AccountWrapper";
+import ProfilePicture from "../../components/custom/images/ProfilePicture";
 
 const Edit = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [profile, setProfile] = useState(null);
   const filePickerRef = useRef(null);
   const { register, handleSubmit } = useForm();
-  const { username, image } = getUser();
+  // const { username, image } = getUser();
+
+  const { image, username } = useSelector(state => state.auth.user);
+
   const { data, isLoading } = useUserDataQuery(username);
 
   let user = data?.user;
@@ -112,10 +115,7 @@ const Edit = () => {
                       alt="profile"
                     />
                   ) : (
-                    <Image
-                      src={image ? image : "social-media/user_wxjx6f"}
-                      classname="w-[38px] h-[38px] rounded-full object-cover"
-                    />
+                    <ProfilePicture src={image} className="w-[38px] h-[38px] rounded-full object-cover" />
                   )}
                 </div>
                 <div className="flex flex-col">

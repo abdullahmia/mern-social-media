@@ -5,6 +5,7 @@ import { useLikePostMutation } from '../../../features/post/postApi';
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ProfilePicture from "../custom/images/ProfilePicture";
 import Image from "./Image";
 import CommentInput from "./post/CommentInput";
 import PostReaction from "./post/PostReaction";
@@ -26,14 +27,7 @@ const Post = ({ post = {} }) => {
       <div className="p-3 flex justify-between items-center border-b dark:border-[#2d343b]">
         <div className="flex items-center gap-3">
           <div>
-            <Image
-              src={
-                post?.user?.image
-                  ? post?.user?.image
-                  : "social-media/user_wxjx6f"
-              }
-              classname="w-[32px] h-[32px] rounded-full"
-            />
+            <ProfilePicture src={post?.user?.image} className="w-[32px] h-[32px] rounded-full" />
           </div>
           <div>
             <Link to={`/${post?.user?.username}`} className="text-[14px] text-[#262626] dark:text-gray-100 font-[600]">

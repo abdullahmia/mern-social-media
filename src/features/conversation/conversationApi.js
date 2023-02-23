@@ -1,5 +1,3 @@
-import toast from 'react-hot-toast';
-import playNotificationSound from '../../utils/NotificationSound';
 import socket from "../../utils/socket";
 import { apiSlice } from "../api/apiSlice";
 
@@ -21,11 +19,11 @@ export const conversationApi = apiSlice.injectEndpoints({
                         })
 
                         
-                        if (user._id === conversation.participants.find((participant) => participant._id !== user._id)._id) {
-                            toast.success(`${conversation.participants.find((participant) => participant._id !== user._id).fullName}send you message`);
+                        // if (user._id === conversation.participants.find((participant) => participant._id !== user._id)._id) {
+                        //     toast.success(`${conversation.participants.find((participant) => participant._id !== user._id).fullName}send you message`);
 
-                            playNotificationSound();
-                        }
+                        //     playNotificationSound();
+                        // }
 
                     }
 

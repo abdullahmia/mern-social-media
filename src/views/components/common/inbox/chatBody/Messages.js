@@ -1,11 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useGetMessagesQuery } from "../../../../../features/message/messageApi";
+import useChatScroll from '../../../../../hooks/useChatScroll';
 import Message from "./Message";
 
 const Messages = () => {
   const { conversationId } = useParams();
 
   const { data: messages, isLoading } = useGetMessagesQuery(conversationId);
+
+  const ref = useChatScroll(messages)
   
   // decide what to render
   const renderMessages = () => {
@@ -21,11 +24,11 @@ const Messages = () => {
 
 
   return (
-    <div class="chat-body p-4 flex-1 flex flex-col overflow-y-scroll">
+    <div ref={ref} class="chat-body p-4 flex-1 flex flex-col overflow-y-scroll">
       {
         renderMessages()
       }
-      </div>
+    </div>
   )
 }
 
