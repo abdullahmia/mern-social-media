@@ -38,8 +38,31 @@ export const conversationApi = apiSlice.injectEndpoints({
                 body,
             }),
         }),
+
+        seenConversation: builder.mutation({
+            query: (conversationId) => ({
+                url: `/conversation/${conversationId}`,
+                method: "PATCH",
+            }),
+            async onQueryStarted(conversationId, { dispatch, queryFulfilled, getState}) { 
+                const { user } = getState()?.auth;
+                let conversationPatch = dispatch(apiSlice.util.updateQueryData("getConversations", undefined, (draft) => {
+                    let conversation = draft.find((conversation) => conversation._id === conversationId);
+                    if (conversation) {
+                        conversation.seen.push(user._id);
+                    }
+                }));
+
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    conversationPatch.undo();
+                }
+            }
+        }),
+
     })
 })
 
 
-export const { useAddConversationMutation, useGetConversationsQuery } = conversationApi;
+export const { useAddConversationMutation, useGetConversationsQuery, useSeenConversationMutation } = conversationApi;

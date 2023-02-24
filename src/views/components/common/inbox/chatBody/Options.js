@@ -3,11 +3,14 @@ import { Picker } from "emoji-mart";
 import { Fragment, useState } from "react";
 import { BiHeart, BiImageAlt } from "react-icons/bi";
 import { BsEmojiSmile } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { apiSlice } from "../../../../../features/api/apiSlice";
 import { useSendMessageMutation } from "../../../../../features/message/messageApi";
 
 const Options = ({ conversationId, receiver }) => {
     const [message, setMessage] = useState("");
+
+    const dispatch = useDispatch();
 
     // for adding emojis
     const addEmoji = (e) => {
@@ -33,8 +36,15 @@ const Options = ({ conversationId, receiver }) => {
         };
 
         sendMessage({conversationId, body: messageData});
-
         setMessage('');
+    }
+
+    const handleFocused = () => {
+        // update cached conversation seen users
+        dispatch(apiSlice.util.updateQueryData('getConversations', undefined, (draft) => {
+            const conversation = draft.find((conversation) => conversation._id === conversationId);
+            conversation.seen = [user._id];
+        }))
     }
 
   return (
@@ -69,6 +79,7 @@ const Options = ({ conversationId, receiver }) => {
                       type="text"
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
+                      onFocus={handleFocused}
                       placeholder="Message..."
                       className="w-full py-2 text-[14px] text-[#8e8e8e] font-[400] border-none focus:outline-none  bg-transparent"
                   />

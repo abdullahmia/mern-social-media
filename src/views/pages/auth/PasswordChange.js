@@ -19,7 +19,6 @@ const PasswordChange = () => {
     } else {
       await passwordChange(data).then((res) => {
         if (res.data) {
-          // console.log(res?.data?.message);
           toast.custom((t) => (
             <div className="dark:bg-gray-700 bg-white dark:text-gray-300 mb-4 p-4 rounded-md shadow-md flex flex-col gap-9">
               <h2>{res?.data?.message}</h2>

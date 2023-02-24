@@ -25,12 +25,14 @@ export const messageApi = apiSlice.injectEndpoints({
                         dispatch(apiSlice.util.updateQueryData('getConversations', undefined, (draft) => {
                             const conversation = draft.find((conversation) => conversation._id === conversationId);
                             conversation.lastMessage = message.text;
+                            conversation.seen = conversation.seen.filter((id) => id !== user._id);
 
                             // this conversation is on top
                             const index = draft.indexOf(conversation);
                             draft.splice(index, 1);
                             draft.unshift(conversation);
 
+                            return draft;
 
                         }))
                     }
@@ -64,6 +66,7 @@ export const messageApi = apiSlice.injectEndpoints({
                 const conversationPatch = dispatch(apiSlice.util.updateQueryData('getConversations', undefined, (draft) => {
                     const conversation = draft.find((conversation) => conversation._id === conversationId);
                     conversation.lastMessage = body.text;
+                    conversation.seen = [user._id];
 
                     // this conversation is on top
                     const index = draft.indexOf(conversation);

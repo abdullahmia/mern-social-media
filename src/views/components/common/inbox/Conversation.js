@@ -1,6 +1,7 @@
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSeenConversationMutation } from "../../../../features/conversation/conversationApi";
 import ProfilePicture from "../../custom/images/ProfilePicture";
 
 const Conversation = ({conversation = {}}) => {
@@ -10,9 +11,20 @@ const Conversation = ({conversation = {}}) => {
     const receiver = participants.find(participant => participant._id !== user._id);
     const {fullName, image} = receiver || {};
 
+    const navigate = useNavigate();
+
+    const isSeen = conversation.seen.includes(user._id);
+
+    const [seenConversation] = useSeenConversationMutation();
+    const renderMessage = (conversationId) => {
+        navigate(`/direct/${conversationId}`);
+        seenConversation(conversationId);
+    }
+
+
 
   return (
-      <Link to={`/direct/${_id}`} class="flex justify-between items-center p-4  relative hover:bg-gray-100 dark:hover:bg-[#24282e]">
+      <div onClick={() => renderMessage(_id)} class={`cursor-pointer flex items-center p-4  relative hover:bg-gray-100 dark:hover:bg-[#24282e] `}>
           <div class="w-10 h-10 relative flex flex-shrink-0">
               <ProfilePicture src={image} class="shadow-md rounded-full w-full h-full object-cover" />
           </div>
@@ -24,7 +36,8 @@ const Conversation = ({conversation = {}}) => {
                   </div>
               </div>
           </div>
-      </Link>
+          {!isSeen && <div class="w-3 h-3 bg-gray-500 rounded-full"></div>}
+      </div>
   )
 }
 

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
 import { BiSend } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import { useAddConversationMutation } from "../../../../../features/conversation/conversationApi";
 
 const SendMessage = ({ receiver = {}, setIsNewChatOpen }) => {
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   // add conversation handler
-  const [addConversation, { isLoading, isSuccess, isError }] = useAddConversationMutation();
+  const [addConversation, { isLoading, isSuccess, isError, data: conversation }] = useAddConversationMutation();
   const addConversationHandler = (e) => {
     e.preventDefault();
     if (!message) return toast.error('Message is required');
@@ -18,12 +20,13 @@ const SendMessage = ({ receiver = {}, setIsNewChatOpen }) => {
     if (isSuccess) {
       setMessage('');
       setIsNewChatOpen(false);
+      navigate(`/direct/${conversation._id}`);
       toast.success('Message sent successfully');
     }
     if (isError) {
       toast.error('Something went wrong');
     }
-  }, [isSuccess, isError, setIsNewChatOpen])
+  }, [isSuccess, isError, setIsNewChatOpen, conversation, navigate])
 
 
   return (

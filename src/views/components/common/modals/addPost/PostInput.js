@@ -50,7 +50,7 @@ const PostInput = ({ setShowModal, image, setImage }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
+      //
     }
   }, [isSuccess, data]);
 

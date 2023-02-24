@@ -1,9 +1,10 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { userLoggedOut } from "../../../features/auth/authSlice";
+import { useGetConversationsQuery } from "../../../features/conversation/conversationApi";
 import ProfilePicture from "../custom/images/ProfilePicture";
 import Switcher from "../custom/Switcher";
 import AddPost from "./modals/addPost/AddPost";
@@ -11,12 +12,30 @@ import Notifications from "./notification/Notifications";
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
-  // let image = user?.image ? user?.image : "user_cowfsl";
+  const [unreadMessages, setUnreadMessages] = useState(null);
+
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+
+  // unread conversations
+  const { data: conversations } = useGetConversationsQuery();
+  useEffect(() =>  {
+
+    if (conversations) {
+      const unread = conversations.filter((conversation) => {
+        return !conversation.seen.includes(user._id);
+      });
+
+      setUnreadMessages(unread.length);
+    }
+
+  }, [conversations, user._id])
+
+
 
   // logout function
   const logout = () => {
@@ -55,7 +74,7 @@ const Header = () => {
                 ></path>
               </svg>
             </Link>
-            <Link to="/direct">
+            <Link to="/direct" className="relative focus:outline-none">
               <svg
                 aria-label="Messenger"
                 className="dark:text-gray-200"
@@ -78,6 +97,11 @@ const Header = () => {
                   fillRule="evenodd"
                 ></path>
               </svg>
+              {unreadMessages > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 rounded-full text-xs text-white w-4 h-4 flex items-center justify-center">
+                  {unreadMessages}
+                </span>
+              )}
             </Link>
 
             <button onClick={() => setShowModal(!showModal)}>
