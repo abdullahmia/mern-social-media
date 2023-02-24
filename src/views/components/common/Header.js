@@ -9,6 +9,7 @@ import ProfilePicture from "../custom/images/ProfilePicture";
 import Switcher from "../custom/Switcher";
 import AddPost from "./modals/addPost/AddPost";
 import Notifications from "./notification/Notifications";
+import Search from "./search/Search";
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
@@ -52,6 +53,9 @@ const Header = () => {
             <Link to="/">
               <img src={logo} className="w-[110px]" alt="logo" />
             </Link>
+          </div>
+          <div>
+            <Search />
           </div>
           <div className="flex items-center gap-6">
             <Link to="/">
@@ -153,7 +157,7 @@ const Header = () => {
               </div>
             )}
 
-            <Link to="/search">
+            {/* <Link to="/search">
               <svg
                 aria-label="Find People"
                 className="dark:text-gray-200"
@@ -184,7 +188,7 @@ const Header = () => {
                   y2="22"
                 ></line>
               </svg>
-            </Link>
+            </Link> */}
             {/* <button to="/notification" className="dark:text-gray-200">
               <svg
                 aria-label="Activity Feed"
