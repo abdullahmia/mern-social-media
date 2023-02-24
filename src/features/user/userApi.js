@@ -83,6 +83,11 @@ export const userApi = apiSlice.injectEndpoints({
       query: () => `/user/followers`,
     }),
 
+    // search user by username
+    searchUser: builder.query({
+      query: (username) => `/user/search?username=${username}`,
+    }),
+
   }),
 });
 
@@ -94,4 +99,5 @@ export const {
   useUpdateProfilePictureMutation,
   useUserDataQuery,
   useGetFollowersQuery,
+  useSearchUserQuery
 } = userApi;
