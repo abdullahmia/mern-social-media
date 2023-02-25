@@ -37,7 +37,6 @@ const Header = () => {
   }, [conversations, user._id])
 
 
-
   // logout function
   const logout = () => {
     dispatch(userLoggedOut());
@@ -54,7 +53,7 @@ const Header = () => {
               <img src={logo} className="w-[110px]" alt="logo" />
             </Link>
           </div>
-          <div>
+          <div className="lg:block hidden">
             <Search />
           </div>
           <div className="flex items-center gap-6">

@@ -60,7 +60,7 @@ const Notifications = () => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
           >
-              <Popover.Panel className="border absolute right-[0px] top-[41px] z-10 mt-2 w-[330px] bg-white dark:bg-gray-700 dark:border-[#2d343b]    ">
+              <Popover.Panel className="border absolute lg:right-[0px] right-[-30px] top-[41px] z-10 mt-2 w-[330px] bg-white dark:bg-gray-700 dark:border-[#2d343b]    ">
                   <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-800">
                       <p className="text-sm font-semibold text-[#262626] dark:text-gray-100">Notifications</p>
                   </div>

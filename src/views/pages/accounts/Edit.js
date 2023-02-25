@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 // prettier-ignore
 import { useSelector } from "react-redux";
+import { useIsExitUserQuery } from "../../../features/auth/authApi";
 import { useUpdateProfileMutation, useUpdateProfilePictureMutation, useUserDataQuery } from "../../../features/user/userApi";
 import Loader from "../../components/common/loaders/Loader";
 import AccountWrapper from "../../components/custom/AccountWrapper";
@@ -12,11 +13,44 @@ const Edit = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [profile, setProfile] = useState(null);
   const filePickerRef = useRef(null);
+  const [usernameTerm, setUsernameTerm] = useState("");
+  const [debouncedTerm, setDebouncedTerm] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [isSubmitAvailable, setIsSubmitAvailable] = useState(false);
+
   const { register, handleSubmit } = useForm();
-  // const { username, image } = getUser();
+
+
+  // debounce username
+  useEffect(() => {
+    setUsernameError("");
+    const debounceTimer = setTimeout(() => {
+      setDebouncedTerm(usernameTerm);
+    }, 500);
+
+    return () => {
+      clearTimeout(debounceTimer);
+    };
+  }, [usernameTerm]);
+
+  // check username is exist
+  const { data: isExitUser, isLoading: isExitUserLoading } = useIsExitUserQuery(debouncedTerm);
+  useEffect(() => {
+    if (isExitUser) {
+      const { isUser } = isExitUser;
+      if (isUser) {
+        setUsernameError("Username already taken");
+        setIsSubmitAvailable(true);
+      } else {
+        setUsernameError("")
+        setIsSubmitAvailable(false);
+      }
+    }
+
+  }, [isExitUser, isExitUserLoading]);
+
 
   const { image, username } = useSelector(state => state.auth.user);
-
   const { data, isLoading } = useUserDataQuery(username);
 
   let user = data?.user;
@@ -67,7 +101,7 @@ const Edit = () => {
     };
   };
 
-  const [updateProfilePicture, { isLoading: upPicLoading }] =
+  const [updateProfilePicture, { isLoading: upPicLoading, isSuccess: upPicSuccess }] =
     useUpdateProfilePictureMutation();
 
   // upload profile picture handler
@@ -75,23 +109,19 @@ const Edit = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", profile);
-    await updateProfilePicture(formData).then((res) => {
-      if (res.data) {
-        let oldUser = JSON.parse(localStorage.getItem("user"));
-        localStorage.removeItem("user");
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...oldUser, image: res?.data?.image })
-        );
-        toast.custom((t) => (
-          <div className="dark:bg-gray-700 bg-white dark:text-gray-300 mb-4 p-4 rounded-md shadow-md flex flex-col gap-9">
-            <h2>{res?.data?.message}</h2>
-          </div>
-        ));
-        setProfile(null);
-      }
-    });
+    await updateProfilePicture(formData);
   };
+
+  useEffect(() => {
+    if (upPicSuccess) {
+      setSelectedFile(null);
+      toast.custom((t) => (
+        <div className="dark:bg-gray-700 bg-white dark:text-gray-300 mb-4 p-4 rounded-md shadow-md flex flex-col gap-9">
+          <h2>Profile Picture has been updated!</h2>
+        </div>
+      ));
+    }
+  }, [upPicSuccess])
 
   return (
     <AccountWrapper title={"Edit profile • Instagram"}>
@@ -184,10 +214,13 @@ const Edit = () => {
                   </label>
                 </div>
                 <div className="flex flex-col w-[335px] gap-2">
+                    {usernameError && <p className="text-xs text-red-500">{usernameError}</p>}
+                  
                   <input
                     type="text"
                     defaultValue={user?.username}
                     {...register("username")}
+                    onChange={e => setUsernameTerm(e.target.value)}
                     className="border px-2 py-1 focus:outline-none background dark:text-gray-300 dark:border-[#2d343b]"
                   />
                   <p className="text-[12px] text-[#8e8e8e] font-[400]">
@@ -326,6 +359,7 @@ const Edit = () => {
                 </div>
                 <div className="flex w-[335px] gap-4">
                   <button
+                    disabled={isSubmitAvailable}
                     type="submit"
                     className="flex items-center gap-2 bg-[#0095F6] text-[14px] text-white py-1 px-4 rounded"
                   >

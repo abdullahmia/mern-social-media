@@ -1,18 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import appleStore from "../../../assets/appstore.png";
 import facebook from "../../../assets/facebook.png";
 import playStore from "../../../assets/googleplay.png";
 import logo from "../../../assets/logo.png";
-import { useRegisterUserMutation } from "../../../features/auth/authApi";
+import { useIsExitUserQuery, useRegisterUserMutation } from "../../../features/auth/authApi";
 import Loader from "../../components/common/loaders/Loader";
 import Wrapper from "../../components/custom/Wrapper";
 
 const Signup = () => {
   const [message, setMessage] = useState("");
+  const [usernameTerm, setUsernameTerm] = useState("");
+  const [debouncedTerm, setDebouncedTerm] = useState("");
   const { register, handleSubmit, reset } = useForm();
+  const [isSubmitAvailable, setIsSubmitAvailable] = useState(false);
+
   const navigate = useNavigate();
+
+  // debounce username
+  useEffect(() => {
+    setMessage("");
+    const debounceTimer = setTimeout(() => {
+      setDebouncedTerm(usernameTerm);
+    }, 500);
+
+    return () => {
+      clearTimeout(debounceTimer);
+    };
+  }, [usernameTerm]);
+
+  // check username is exist
+  const {data: isExitUser, isLoading: isExitUserLoading} = useIsExitUserQuery(debouncedTerm);
+  useEffect(() => {
+    if (isExitUser) {
+      const {isUser} = isExitUser;
+      if (isUser) {
+        setMessage("Username is already taken");
+        setIsSubmitAvailable(true);
+      } else {
+        setMessage("");
+        setIsSubmitAvailable(false);
+      }
+    }
+
+  }, [isExitUser, isExitUserLoading]);
+  
 
   // login form submit
   const [registerUser, { isLoading }] = useRegisterUserMutation();
@@ -84,7 +117,9 @@ const Signup = () => {
                     type="text"
                     className="border text-xs py-2.5 bg-gray-50 px-3 rounded focus:outline-none background dark:text-gray-300 dark:border-[#2d343b]"
                     placeholder="Username"
+                    onChange={(e) => setUsernameTerm(e.target.value)}
                     required
+                    autoComplete="off"
                   />
                   <input
                     {...register("password")}
@@ -102,6 +137,7 @@ const Signup = () => {
                     <b>Terms, Privacy Policy and Cookies Policy</b>
                   </p>
                   <button
+                    disabled={isSubmitAvailable}
                     type="submit"
                     className="flex items-center justify-center gap-4 capitalize text-sm bg-blue-500 text-white py-1.5 rounded"
                   >

@@ -16,7 +16,6 @@ export const authApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           const { user, token } = data || {};
 
-          // update the store
           dispatch(userLoggedIn({ user, token }));
           
         } catch (err) {
@@ -25,7 +24,6 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    // create a user by admin
     registerUser: builder.mutation({
       query: (content) => {
         return {
@@ -36,7 +34,10 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    // password change
+    isExitUser: builder.query({
+      query: (username) => `/auth/isuser?username=${username}`
+    }),
+    
     passwordChange: builder.mutation({
       query: (body) => {
         return {
@@ -47,7 +48,6 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    // forgot password email send
     forgotPasswordEmailSend: builder.mutation({
       query: (body) => {
         return {
@@ -58,7 +58,6 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    // reset password
     resetPassword: builder.mutation({
       query: ({ user, token, body }) => {
         return {
@@ -74,6 +73,7 @@ export const authApi = apiSlice.injectEndpoints({
 export const {
   useLoginMutation,
   useRegisterUserMutation,
+  useIsExitUserQuery,
   useForgotPasswordEmailSendMutation,
   usePasswordChangeMutation,
   useResetPasswordMutation,
