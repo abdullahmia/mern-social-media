@@ -1,23 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// prettier-ignore
-import { useFollowMutation, useUnfollowMutation } from "../../../features/user/userApi";
-
 import { useSelector } from "react-redux";
-import Image from "./Image";
+import { Link } from "react-router-dom";
+import { useFollowMutation, useUnfollowMutation } from "../../../features/user/userApi";
+import ProfilePicture from '../custom/images/ProfilePicture';
+import Loader from "./loaders/Loader";
+
 
 const SuggestedProfile = ({ user }) => {
-  let image = user?.image ? user?.image : "social-media/user_wxjx6f";
   const { user: currentUser } = useSelector((state) => state.auth);
 
   // follow user
-  const [follow] = useFollowMutation();
+  const [follow, {isLoading: followLoading}] = useFollowMutation();
   const followHandler = async () => {
     await follow(user?._id).then((res) => {});
   };
 
   // unfollow a user
-  const [unfollow] = useUnfollowMutation();
+  const [unfollow, {isLoading: unFollowLoading}] = useUnfollowMutation();
   const unfollowHandler = async () => {
     await unfollow(user?._id).then((res) => {});
   };
@@ -31,7 +30,7 @@ const SuggestedProfile = ({ user }) => {
             alt=""
             className="w-[32px] h-[32px] rounded-full"
           /> */}
-          <Image src={image} classname="w-[32px] h-[32px] rounded-full" />
+          <ProfilePicture src={user.image} className="w-[32px] h-[32px] rounded-full" />
         </div>
         <div>
           <Link
@@ -51,14 +50,16 @@ const SuggestedProfile = ({ user }) => {
             onClick={unfollowHandler}
             className="text-[12px] font-[700] text-[#0095f6] capitalize"
           >
-            unfollow
+            {unFollowLoading ? <Loader /> : 'Unfollow'}
           </button>
         ) : (
           <button
             onClick={followHandler}
             className="text-[12px] font-[700] text-[#0095f6] capitalize"
           >
-            follow
+            {
+              followLoading ? <Loader /> : "follow"
+            }
           </button>
         )}
       </div>

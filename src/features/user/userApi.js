@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { userLoggedIn } from "../auth/authSlice";
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -39,6 +40,28 @@ export const userApi = apiSlice.injectEndpoints({
           body: body,
         };
       },
+      async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
+        try {
+          const {user, token} = getState()?.auth;
+          const result = await queryFulfilled;
+          const { data } = result;
+          const { image } = data || {};
+
+          // update the store
+          dispatch(userLoggedIn({user: {...user, image}, token}))
+
+          // update userData cache
+          dispatch(
+            apiSlice.util.updateQueryData("userData", user.username, (draft) => {
+              draft.user.image = image;
+            })
+          );
+
+
+        } catch (err) { 
+          // do nothing
+        }
+      }
     }),
 
     // suggestion users
@@ -54,20 +77,34 @@ export const userApi = apiSlice.injectEndpoints({
           method: "PATCH",
         };
       },
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        
+      async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
+        const {user: currentUser} = getState()?.auth;
+
+        // update suggestionUsers cache
+        let patchResult = dispatch(
+          apiSlice.util.updateQueryData("suggestionUsers", undefined, (draft) => {
+            let user = draft.find((user) => user._id === arg);
+            user.followers.push(currentUser._id);
+          }
+        ));
+
+        // update userData cache
+        let patchResult2 = dispatch(
+          apiSlice.util.updateQueryData("userData", currentUser.username, (draft) => {
+            draft.user.following.push(arg);
+          }
+        ));
+
         try {
-          const {user} = await queryFulfilled;
-          dispatch(apiSlice.util.updateQueryData('userData', user._id, (draft) => {
-            draft.user.followers = [...user.followers]
-          }));
-
+          await queryFulfilled;
         } catch (err) {
-          
+          patchResult.undo();
+          patchResult2.undo();
         }
-
       }
     }),
+
+
     // Follow a user by id
     unfollow: builder.mutation({
       query: (id) => {
@@ -76,6 +113,30 @@ export const userApi = apiSlice.injectEndpoints({
           method: "PATCH",
         };
       },
+      async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
+        const {user: currentUser} = getState()?.auth;
+
+        
+        let patchResult = dispatch(
+          apiSlice.util.updateQueryData("suggestionUsers", undefined, (draft) => {
+            let user = draft.find((user) => user._id === arg);
+            user.followers = user.followers.filter((follower) => follower !== currentUser._id);
+          }
+        ));
+
+        let patchResult2 = dispatch(
+          apiSlice.util.updateQueryData("userData", currentUser.username, (draft) => {
+            draft.user.following = draft.user.following.filter((following) => following !== arg);
+          }
+        ));
+
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          patchResult.undo();
+          patchResult2.undo();
+        }
+      }
     }),
 
     // get followers

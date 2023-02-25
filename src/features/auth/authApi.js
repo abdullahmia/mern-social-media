@@ -18,10 +18,7 @@ export const authApi = apiSlice.injectEndpoints({
 
           // update the store
           dispatch(userLoggedIn({ user, token }));
-
-          // save the token to local storage
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(user));
+          
         } catch (err) {
           // do nothing
         }
