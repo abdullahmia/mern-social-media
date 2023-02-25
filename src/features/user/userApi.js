@@ -96,7 +96,13 @@ export const userApi = apiSlice.injectEndpoints({
         ));
 
         try {
-          await queryFulfilled;
+          let result = await queryFulfilled;
+          const {user} = result.data;
+
+          dispatch(apiSlice.util.updateQueryData("userData", user.username, (draft) => {
+            draft.user.followers.push(currentUser._id);
+          }));
+
         } catch (err) {
           patchResult.undo();
           patchResult2.undo();
@@ -131,7 +137,13 @@ export const userApi = apiSlice.injectEndpoints({
         ));
 
         try {
-          await queryFulfilled;
+          const result = await queryFulfilled;
+          const {user} = result.data;
+
+          dispatch(apiSlice.util.updateQueryData("userData", user.username, (draft) => {
+            draft.user.followers = draft.user.followers.filter((follower) => follower !== currentUser._id);
+          }))
+
         } catch (err) {
           patchResult.undo();
           patchResult2.undo();

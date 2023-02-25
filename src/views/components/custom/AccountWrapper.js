@@ -1,6 +1,6 @@
 import Menu from "../common/account/Menu";
-import Footer from "../common/Footer";
-import Header from "../common/Header";
+import Footer from "../common/ui/Footer";
+import Header from "../common/ui/Header";
 import Wrapper from "./Wrapper";
 
 const AccountWrapper = ({ children, title }) => {

@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { BiCircle, BiX } from 'react-icons/bi';
 import { useGetFollowersQuery } from '../../../../../features/user/userApi';
-import Image from '../../Image';
+import ProfilePicture from '../../../custom/images/ProfilePicture';
 import SendMessage from './SendMessage';
 
 const NewChat = ({isIcon}) => {
@@ -67,7 +67,7 @@ const NewChat = ({isIcon}) => {
                     <p className='text-xl'>To: </p>
                     {user && <div className='flex items-center gap-2'>
                       <div className='w-8 h-8'>
-                        <Image src={user.image ? user.image : 'social-media/user_wxjx6f'} classname='w-full h-full rounded-full' alt="" />
+                        <ProfilePicture src={user.image} className="w-full h-full rounded-full" />
                       </div>
                       <p>{user.username}</p>
                       <button onClick={() => setUser(null)}><BiX size={25} /></button>
@@ -88,7 +88,7 @@ const NewChat = ({isIcon}) => {
                           followers && followers.map((follower, key) => (
                             <div key={key} onClick={() => setUser(follower)} className='py-2 px-3 flex items-center gap-3 hover:bg-gray-100 transition cursor-pointer dark:hover:bg-[#202020]'>
                               <div className='w-11 h-11'>
-                                <Image src={follower.image ? follower.image : 'social-media/user_wxjx6f'} classname='w-full h-full rounded-full' alt="" />
+                                <ProfilePicture src={follower.image} className="w-full h-full rounded-full" />
                               </div>
                               <div className='flex flex-1 justify-between items-center text-[#262626] dark:text-gray-100'>
                                 <div>

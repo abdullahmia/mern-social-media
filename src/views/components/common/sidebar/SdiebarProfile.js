@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Image from "./Image";
+import ProfilePicture from "../../custom/images/ProfilePicture";
 
 const SdiebarProfile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -8,10 +8,7 @@ const SdiebarProfile = () => {
     <div className="flex items-center justify-between py-3">
       <div className="flex items-center gap-4">
         <div>
-          <Image
-            src={user?.image ? user?.image : "social-media/user_wxjx6f"}
-            classname="w-[56px] h-[56px] rounded-full object-cover"
-          />
+          <ProfilePicture src={user?.image} className="w-[56px] h-[56px] rounded-full object-cover" />
         </div>
         <div>
           <Link

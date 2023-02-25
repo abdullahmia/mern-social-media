@@ -2,14 +2,14 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../../assets/logo.png";
-import { userLoggedOut } from "../../../features/auth/authSlice";
-import { useGetConversationsQuery } from "../../../features/conversation/conversationApi";
-import ProfilePicture from "../custom/images/ProfilePicture";
-import Switcher from "../custom/Switcher";
-import AddPost from "./modals/addPost/AddPost";
-import Notifications from "./notification/Notifications";
-import Search from "./search/Search";
+import logo from "../../../../assets/logo.png";
+import { userLoggedOut } from "../../../../features/auth/authSlice";
+import { useGetConversationsQuery } from "../../../../features/conversation/conversationApi";
+import ProfilePicture from "../../custom/images/ProfilePicture";
+import Switcher from "../../custom/Switcher";
+import AddPost from "../modals/addPost/AddPost";
+import Notifications from "../notification/Notifications";
+import Search from "../search/Search";
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
@@ -175,7 +175,7 @@ const Header = () => {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-[0px] top-[36px] z-10 mt-2 w-56 origin-top-right rounded-md background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  dark:border-[#2d343b]">
+                <Menu.Items className="absolute right-[0px] top-[41px] z-10 mt-2 w-56 origin-top-right rounded-md background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  dark:border-[#2d343b]">
                   <div className="py-1">
                     <ul
                       className="py-1 text-sm text-gray-700 dark:text-gray-200"

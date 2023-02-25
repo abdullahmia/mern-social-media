@@ -1,6 +1,6 @@
 import Wrapper from "../../custom/Wrapper";
-import Header from "../Header";
-import Sidebar from "./Sidebar";
+import Header from "../ui/Header";
+import Sidebar from './Sidebar';
 
 const InboxWrapper = ({children}) => {
   return (

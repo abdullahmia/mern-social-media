@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useUserDataQuery } from "../../../features/user/userApi";
-import Footer from "../../components/common/Footer";
-import Header from "../../components/common/Header";
-import Highlight from "../../components/common/Highlight";
-import Image from "../../components/common/Image";
 import Loader from "../../components/common/loaders/Loader";
-import NotFound from "../../components/common/NotFound";
+import Highlight from "../../components/common/profile/Highlight";
 import Posts from "../../components/common/profile/Posts";
+import Footer from "../../components/common/ui/Footer";
+import Header from "../../components/common/ui/Header";
+import Image from "../../components/common/ui/Image";
+import NotFound from "../../components/common/ui/NotFound";
 import Follow from "../../components/custom/Follow";
 import Wrapper from "../../components/custom/Wrapper";
 

@@ -1,12 +1,12 @@
 import moment from "moment";
-import Image from "../Image";
+import ProfilePicture from "../../custom/images/ProfilePicture";
 
 const Comment = ({ comment = {} }) => {
 
 
   return (
     <div className="flex gap-3 items-start py-2">
-      <Image src={comment.user.image} classname="w-[32px] h-[32px] rounded-full" />
+      <ProfilePicture src={comment.user.image} className="w-[32px] h-[32px] rounded-full" />
       
       <div>
         <h2 className="text-[14px] text-[#262626] font-[600] dark:text-gray-300">

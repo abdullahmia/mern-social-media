@@ -1,9 +1,9 @@
 import { useGetPostsQuery } from "../../../features/post/postApi";
 import { useSuggestionUsersQuery } from "../../../features/user/userApi";
-import Header from "../../components/common/Header";
 import PageLoader from "../../components/common/loaders/PageLoader";
 import Post from "../../components/common/post/Post";
-import Sidebar from "../../components/common/Sidebar";
+import Sidebar from "../../components/common/sidebar/Sidebar";
+import Header from "../../components/common/ui/Header";
 import Wrapper from "../../components/custom/Wrapper";
 
 const Feed = () => {

@@ -1,5 +1,5 @@
 import { FiHeart, FiMessageCircle } from "react-icons/fi";
-import Image from "../Image";
+import Image from "../ui/Image";
 
 const Post = ({ post }) => {
   return (

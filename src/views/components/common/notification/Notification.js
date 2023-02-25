@@ -1,6 +1,6 @@
 import moment from "moment";
 import { Link } from "react-router-dom";
-import Image from "../Image";
+import ProfilePicture from "../../custom/images/ProfilePicture";
 
 const Notification = ({notification}) => {
     const { sender, link, createdAt, type } = notification || {};
@@ -8,7 +8,7 @@ const Notification = ({notification}) => {
   return (
       <Link to={link} className="p-3 flex gap-3 hover:bg-gray-100 dark:hover:bg-gray-600">
           <div>
-              <Image src={image ? image : 'social-media/user_wxjx6f'} classname="w-8 h-8 rounded-full border" />
+              <ProfilePicture src={image} className="w-8 h-8 rounded-full border" />
           </div>
           <div className="flex-1">
             {

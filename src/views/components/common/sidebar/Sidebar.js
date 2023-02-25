@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { useSuggestionUsersQuery } from "../../../features/user/userApi";
-import SuggestedProfile from "../common/SuggestedProfile";
+import { useSuggestionUsersQuery } from "../../../../features/user/userApi";
 import SdiebarProfile from "./SdiebarProfile";
+import SuggestedProfile from "./SuggestedProfile";
 
 const Sidebar = () => {
   const { data: suggestedUsers } = useSuggestionUsersQuery();

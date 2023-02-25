@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useFollowMutation, useUnfollowMutation } from "../../../features/user/userApi";
-import ProfilePicture from '../custom/images/ProfilePicture';
-import Loader from "./loaders/Loader";
+import { useFollowMutation, useUnfollowMutation } from "../../../../features/user/userApi";
+import ProfilePicture from '../../custom/images/ProfilePicture';
+import Loader from "../loaders/Loader";
 
 
 const SuggestedProfile = ({ user }) => {

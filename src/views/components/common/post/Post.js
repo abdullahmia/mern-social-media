@@ -5,7 +5,7 @@ import { useLikePostMutation } from '../../../../features/post/postApi';
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProfilePicture from "../../custom/images/ProfilePicture";
-import Image from "../Image";
+import Image from "../ui/Image";
 import CommentInput from "./CommentInput";
 import PostOptions from "./PostOptions";
 import PostReaction from "./PostReaction";

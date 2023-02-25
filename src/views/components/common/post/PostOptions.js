@@ -77,7 +77,7 @@ const PostOptions = ({postId, username}) => {
                                         <button onClick={copyLinkHandler} className='w-full py-3 text-[14px]'>Copy link</button>
                                         <div className='py-3 text-[14px]'>Embed</div>
                                         <button onClick={redirectProfileHandler} className='w-full py-3 text-[14px]'>About this account</button>
-                                        <div className='py-3 text-[14px]'>Cancel</div>
+                                        <button onClick={closeModal} className='w-full py-3 text-[14px]'>Cancel</button>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
