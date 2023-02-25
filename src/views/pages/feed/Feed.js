@@ -2,7 +2,7 @@ import { useGetPostsQuery } from "../../../features/post/postApi";
 import { useSuggestionUsersQuery } from "../../../features/user/userApi";
 import Header from "../../components/common/Header";
 import PageLoader from "../../components/common/loaders/PageLoader";
-import Post from "../../components/common/Post";
+import Post from "../../components/common/post/Post";
 import Sidebar from "../../components/common/Sidebar";
 import Wrapper from "../../components/custom/Wrapper";
 
@@ -20,7 +20,7 @@ const Feed = () => {
           <div className="container mx-auto px-12 flex gap-8 mt-5">
             <div className="lg:w-[490px] w-[430px]">
               <div>{/* Stories */}</div>
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 mb-8">
                 {posts?.map((post, key) => (
                   <Post key={key} post={post} />
                 ))}

@@ -37,10 +37,10 @@ const Notifications = () => {
       <Popover className="mt-1 relative">
           <Popover.Button onClick={readAllNotificationsHandler} className="relative focus:outline-none">
               <svg
-                  aria-label="Activity Feed"
-                  className="dark:text-gray-200"
-                  // color="#262626"
-                  fill="#262626"
+                  aria-label="Like"
+                  className=""
+                  color="#8e8e8e"
+                  fill="#8e8e8e"
                   height="24"
                   role="img"
                   viewBox="0 0 24 24"

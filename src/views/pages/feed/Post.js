@@ -1,13 +1,14 @@
 import moment from "moment";
-import { AiOutlineEllipsis } from "react-icons/ai";
 import { Link, useParams } from "react-router-dom";
 import { useGetPostQuery } from "../../../features/post/postApi";
 import Header from "../../components/common/Header";
 import Image from "../../components/common/Image";
 import CommentInput from "../../components/common/post/CommentInput";
 import Comments from "../../components/common/post/Comments";
+import PostOptions from "../../components/common/post/PostOptions";
 import PostReaction from "../../components/common/post/PostReaction";
 import Posts from "../../components/common/profile/Posts";
+import ProfilePicture from '../../components/custom/images/ProfilePicture';
 import Wrapper from "../../components/custom/Wrapper";
 
 const Post = () => {
@@ -15,7 +16,8 @@ const Post = () => {
 
   const { data, isLoading } = useGetPostQuery(postId);
   
-  const {post, comments} = data || {};
+  const { post, comments, relatedPosts } = data || {};
+  console.log(relatedPosts);
 
   return (
     <Wrapper title={isLoading ? 'Loading...' : post.caption}>
@@ -31,8 +33,7 @@ const Post = () => {
               <div className="py-5 px-5 flex justify-between items-center border-b dark:border-[#2d343b]">
                 <div className="flex items-center gap-3">
                   <Link to={`/${post.user.username}`}>
-                    <Image src={post.user.image ? post.user.image : 'social-media/user_wxjx6f'} classname="w-[32px] h-[32px] rounded-full" />
-
+                    <ProfilePicture src={post.user.image} className="w-[32px] h-[32px] rounded-full" />
                   </Link>
                   <Link to={`/${post.user.username}`}>
                     <h2 className="text-[14px] text-[#262626] dark:text-gray-100 font-[600]">
@@ -41,9 +42,7 @@ const Post = () => {
                   </Link>
                 </div>
                 <div>
-                  <button>
-                    <AiOutlineEllipsis className="dark:text-gray-100" />
-                  </button>
+                  <PostOptions postId={post?._id} username={post.user.username} />
                 </div>
               </div>
 
@@ -100,7 +99,7 @@ const Post = () => {
               More posts form{" "}
               <span className="text-[#262626]"> {post.user.username}</span>
             </h3>
-            <Posts />
+            <Posts posts={relatedPosts} />
           </div>
         </div>
       }

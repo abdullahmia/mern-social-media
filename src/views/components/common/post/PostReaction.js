@@ -42,7 +42,7 @@ const PostReaction = ({post}) => {
                           <button onClick={likePostHandler}>
                               <svg
                                   aria-label="Like"
-                                  className="_ab6-"
+                                  className=""
                                   color="#8e8e8e"
                                   fill="#8e8e8e"
                                   height="24"

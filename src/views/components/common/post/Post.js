@@ -1,14 +1,14 @@
 import moment from "moment";
-import { AiOutlineEllipsis } from "react-icons/ai";
 // prettier-ignore
-import { useLikePostMutation } from '../../../features/post/postApi';
+import { useLikePostMutation } from '../../../../features/post/postApi';
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import ProfilePicture from "../custom/images/ProfilePicture";
-import Image from "./Image";
-import CommentInput from "./post/CommentInput";
-import PostReaction from "./post/PostReaction";
+import ProfilePicture from "../../custom/images/ProfilePicture";
+import Image from "../Image";
+import CommentInput from "./CommentInput";
+import PostOptions from "./PostOptions";
+import PostReaction from "./PostReaction";
 
 const Post = ({ post = {} }) => {
   const { user } = useSelector((state) => state.auth);
@@ -36,9 +36,7 @@ const Post = ({ post = {} }) => {
           </div>
         </div>
         <div>
-          <button>
-            <AiOutlineEllipsis className="dark:text-gray-100" />
-          </button>
+          <PostOptions postId={post?._id} username={post?.user?.username} />
         </div>
       </div>
       <div onDoubleClick={likePostHandler} className="cursor-pointer">
