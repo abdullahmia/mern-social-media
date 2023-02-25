@@ -14,7 +14,7 @@ const Posts = ({ posts }) => {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-3 lg:gap-5 gap-1">
+          <div className="grid grid-cols-3 lg:gap-5 gap-1 px-5">
           {posts?.map((post, key) => (
             <Post key={key} post={post} />
           ))}

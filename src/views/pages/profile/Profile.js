@@ -1,14 +1,14 @@
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUserDataQuery } from "../../../features/user/userApi";
 import Loader from "../../components/common/loaders/Loader";
 import Highlight from "../../components/common/profile/Highlight";
 import Posts from "../../components/common/profile/Posts";
 import Footer from "../../components/common/ui/Footer";
 import Header from "../../components/common/ui/Header";
-import Image from "../../components/common/ui/Image";
 import NotFound from "../../components/common/ui/NotFound";
 import Follow from "../../components/custom/Follow";
+import ProfilePicture from "../../components/custom/images/ProfilePicture";
 import Wrapper from "../../components/custom/Wrapper";
 
 const Profile = () => {
@@ -16,8 +16,14 @@ const Profile = () => {
   const { data, isLoading, isError } = useUserDataQuery(username);
   let user = data?.user;
   let posts = data?.posts;
-
+  
+  const navigate = useNavigate();
+  
   const { user: localUser } = useSelector((state) => state.auth);
+
+  const editProfileRedirect = () => {
+    navigate('/account/edit')
+  }
 
   return (
     <Wrapper
@@ -40,14 +46,14 @@ const Profile = () => {
             <NotFound />
           ) : (
             <div className="container mx-auto">
-              <div className="flex lg:items-center items-start lg:gap-28 gap-8 lg:px-14 px-3 lg:py-8 py-4">
-                <div>
-                  <Image
-                    src={user?.image ? user?.image : "social-media/user_wxjx6f"}
-                    classname="lg:w-[150px] lg:h-[150px] w-[77px] h-[77px] rounded-full object-cover"
+              <div className="flex lg:items-center items-start lg:gap-16 gap-5 lg:px-14 px-3 lg:py-8 py-4">
+                <div className="w-[20%]">
+                  <ProfilePicture
+                    src={user?.image}
+                    className="w-full h-full rounded-full object-cover"
                   />
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="w-[80%] flex flex-col gap-4">
                   <div className="flex items-center gap-5">
                     <h2 className="text-[28px] text-[#262626] font-[300] dark:text-gray-300">
                       {user?.username}
@@ -63,7 +69,7 @@ const Profile = () => {
                       <Follow id={user?._id} followers={user?.followers} />
                     )}
 
-                    <button className="dark:text-gray-300">
+                        <button onClick={editProfileRedirect} className="dark:text-gray-300">
                       <svg
                         aria-label="Options"
                         // color="#262626"
@@ -93,7 +99,7 @@ const Profile = () => {
                       </svg>
                     </button>
                   </div>
-                  <button className="text-[14px] text-[#262626] font-[600] border px-2 py-1 rounded lg:hidden block dark:border-gray-600 dark:text-gray-400">
+                  <button  className="text-[14px] text-[#262626] font-[600] border px-2 py-1 rounded lg:hidden block dark:border-gray-600 dark:text-gray-400">
                     Edit profile
                   </button>
                   <div className="lg:block hidden">
@@ -116,7 +122,7 @@ const Profile = () => {
                       </h3>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1">
                     <h2 className="text-[#262626] dark:text-gray-300 text-[16px] font-[600]">
                       {user?.fullName}
                     </h2>
@@ -129,7 +135,7 @@ const Profile = () => {
                     {user?.website && (
                       <Link
                         to="/"
-                        className="text-[#00376b] dark:text-blue-500 text-[16px] font-[700] hover:underline transition"
+                            className="text-[#00376b] break-words dark:text-blue-500 text-[16px] font-[700] hover:underline transition"
                       >
                         {user?.website}
                       </Link>
@@ -137,7 +143,7 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-              <div className="py-5">
+              <div className="p-5">
                 {/* Featured */}
                 <div className="flex items-center lg:gap-10 gap-3">
                   <Highlight />

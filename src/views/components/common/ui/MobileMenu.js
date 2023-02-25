@@ -6,6 +6,8 @@ import { userLoggedOut } from "../../../../features/auth/authSlice";
 import { useGetConversationsQuery } from "../../../../features/conversation/conversationApi";
 import ProfilePicture from "../../custom/images/ProfilePicture";
 import Switcher from "../../custom/Switcher";
+import Notifications from "../notification/Notifications";
+import AddPost from "../post/AddPost";
 
 const MobileMenu = () => {
     const [unreadMessages, setUnreadMessages] = useState(null);
@@ -61,6 +63,9 @@ const MobileMenu = () => {
                   </Link>
               </div>
               <div>
+                  <AddPost />
+              </div>
+              <div>
                   <Link to="/direct" className="relative focus:outline-none">
                       <svg
                           aria-label="Messenger"
@@ -91,28 +96,11 @@ const MobileMenu = () => {
                       )}
                   </Link>
               </div>
+
               <div>
-                  <Link to="/">
-                      <svg
-                          aria-label="Home"
-                          className="dark:text-gray-200"
-                          color="#262626"
-                          fill="#262626"
-                          height="24"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="24"
-                      >
-                          <path
-                              d="M9.005 16.545a2.997 2.997 0 012.997-2.997h0A2.997 2.997 0 0115 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                          ></path>
-                      </svg>
-                  </Link>
+                  <Notifications />
               </div>
+              
               <Menu as={"div"} className="relative">
                   <Menu.Button className="flex">
                       <ProfilePicture src={user?.image} className="w-[24px] h-[24px] rounded-full object-cover" />
