@@ -8,10 +8,10 @@ import { useGetConversationsQuery } from "../../../../features/conversation/conv
 import ProfilePicture from "../../custom/images/ProfilePicture";
 import Switcher from "../../custom/Switcher";
 import Notifications from "../notification/Notifications";
+import AddPost from "../post/AddPost";
 import Search from "../search/Search";
 
 const Header = () => {
-  const [showModal, setShowModal] = useState(false);
   const [unreadMessages, setUnreadMessages] = useState(null);
 
 
@@ -106,6 +106,8 @@ const Header = () => {
                   </span>
                 )}
               </Link>
+
+              <AddPost />
 
               {/* Notifications */}
               <Notifications />

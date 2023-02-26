@@ -29,7 +29,7 @@ const Sidebar = () => {
               <NewChat isIcon />
           </div>
 
-          <div class="contacts flex-1 overflow-y-scroll">
+          <div class="contacts flex-1 overflow-y-scroll no-scrollbar">
 
             {
                 renderConversations()

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import appleStore from "../../../assets/appstore.png";
 import facebook from "../../../assets/facebook.png";
@@ -16,7 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   // redirect login if user is already login
-  const user = JSON.parse(localStorage.getItem("user"))?.token;
+  const {user} = useSelector(state => state.auth)
   useEffect(() => {
     if (user) {
       navigate("/");
@@ -68,7 +69,7 @@ const Login = () => {
                     {...register("username")}
                     type="text"
                     className="border text-xs py-2.5 bg-gray-50 px-3 rounded focus:outline-none background dark:text-gray-300 dark:border-[#2d343b]"
-                    placeholder="Phone number, email or username"
+                    placeholder="Username"
                     required
                   />
                   <input

@@ -8,7 +8,7 @@ import { useAddPostMutation } from '../../../../features/post/postApi';
 import ProfilePicture from '../../custom/images/ProfilePicture';
 import Loader from '../loaders/Loader';
 
-const fileTypes = ["JPEG", "PNG", "GIF"];
+const fileTypes = ["JPEG", "PNG", "GIF", "JPG"];
 
 const AddPost = () => {
     let [isOpen, setIsOpen] = useState(false);
@@ -49,6 +49,8 @@ const AddPost = () => {
     useEffect(() => {
         if (isSuccess) {
             toast.success(data.message);
+            setFile(null);
+            setCaption('');
             closeModal();
         }
         if (isError) {
@@ -135,11 +137,11 @@ const AddPost = () => {
                                 <div className='p-4'>
                                     <div className='flex items-center gap-4'>
                                         <ProfilePicture src={user?.image} className="w-[35px] h-[35px] rounded-full" />
-                                        <h2>{user.fullName}</h2>
+                                        <h2>{user?.fullName}</h2>
                                     </div>
-                                    <form onSubmit={addNewPost} className='mt-6'>
+                                    <form onSubmit={addNewPost} className='mt-6' id='postForm'>
                                         <div className='w-full flex'>
-                                            <input type="text" className='flex-1 w-full pb-16 mb-3 bg-transparent focus:outline-none' placeholder="What's on your mind?" />
+                                            <input type="text" value={caption} onChange={e => setCaption(e.target.value)} className='flex-1 w-full pb-16 mb-3 bg-transparent focus:outline-none' placeholder="What's on your mind?" />
                                             {/* <EmojiPicker text={caption} setText={setCaption} /> */}
                                         </div>
 
@@ -166,7 +168,7 @@ const AddPost = () => {
                                           </div>
 }
                                         
-                                        <button type='submit' className='bg-[#0095F6] text-gray-100 w-full rounded py-2'>
+                                        <button type='submit' className='bg-[#0095F6] text-center text-gray-100 w-full flex justify-center items-center rounded py-2'>
                                             {isLoading ? <Loader /> : 'Post'}
                                         </button>
 

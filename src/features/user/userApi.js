@@ -42,13 +42,13 @@ export const userApi = apiSlice.injectEndpoints({
       },
       async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
         try {
-          const {user, token} = getState()?.auth;
+          const { user, token } = getState()?.auth;
           const result = await queryFulfilled;
           const { data } = result;
           const { image } = data || {};
 
           // update the store
-          dispatch(userLoggedIn({user: {...user, image}, token}))
+          dispatch(userLoggedIn({ user: { ...user, image }, token }))
 
           // update userData cache
           dispatch(
@@ -58,7 +58,7 @@ export const userApi = apiSlice.injectEndpoints({
           );
 
 
-        } catch (err) { 
+        } catch (err) {
           // do nothing
         }
       }
@@ -78,7 +78,7 @@ export const userApi = apiSlice.injectEndpoints({
         };
       },
       async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
-        const {user: currentUser} = getState()?.auth;
+        const { user: currentUser } = getState()?.auth;
 
         // update suggestionUsers cache
         let patchResult = dispatch(
@@ -86,21 +86,21 @@ export const userApi = apiSlice.injectEndpoints({
             let user = draft.find((user) => user._id === arg);
             user.followers.push(currentUser._id);
           }
-        ));
+          ));
 
         // update userData cache
         let patchResult2 = dispatch(
           apiSlice.util.updateQueryData("userData", currentUser.username, (draft) => {
             draft.user.following.push(arg);
           }
-        ));
+          ));
 
         try {
           let result = await queryFulfilled;
-          const {user} = result.data;
+          const { user } = result.data;
 
           dispatch(apiSlice.util.updateQueryData("userData", user.username, (draft) => {
-            draft.user.followers.push(currentUser._id);
+            draft.user.followers.push(currentUser);
           }));
 
         } catch (err) {
@@ -120,28 +120,28 @@ export const userApi = apiSlice.injectEndpoints({
         };
       },
       async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
-        const {user: currentUser} = getState()?.auth;
+        const { user: currentUser } = getState()?.auth;
 
-        
+
         let patchResult = dispatch(
           apiSlice.util.updateQueryData("suggestionUsers", undefined, (draft) => {
             let user = draft.find((user) => user._id === arg);
             user.followers = user.followers.filter((follower) => follower !== currentUser._id);
           }
-        ));
+          ));
 
         let patchResult2 = dispatch(
           apiSlice.util.updateQueryData("userData", currentUser.username, (draft) => {
             draft.user.following = draft.user.following.filter((following) => following !== arg);
           }
-        ));
+          ));
 
         try {
           const result = await queryFulfilled;
-          const {user} = result.data;
+          const { user } = result.data;
 
           dispatch(apiSlice.util.updateQueryData("userData", user.username, (draft) => {
-            draft.user.followers = draft.user.followers.filter((follower) => follower !== currentUser._id);
+            draft.user.followers = draft.user.followers.filter((follower) => follower?._id !== currentUser._id);
           }))
 
         } catch (err) {

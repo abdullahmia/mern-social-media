@@ -1,9 +1,10 @@
 import { FiHeart, FiMessageCircle } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import Image from "../ui/Image";
 
-const Post = ({ post }) => {
+const Post = ({ post = {} }) => {
   return (
-    <div className="group relative">
+    <Link to={`/p/${post._id}`} className="group relative">
       <Image src={post?.image} classname="w-full h-64 object-cover" />
       <div className="absolute top-0 w-full h-full bg-[#00000052] opacity-0 fd-sh group-hover:opacity-100">
         <div className="flex items-center justify-center h-full">
@@ -19,7 +20,7 @@ const Post = ({ post }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

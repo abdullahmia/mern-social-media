@@ -1,6 +1,7 @@
 import moment from "moment";
 import { Link, useParams } from "react-router-dom";
 import { useGetPostQuery } from "../../../features/post/postApi";
+import Loader from "../../components/common/loaders/Loader";
 import CommentInput from "../../components/common/post/CommentInput";
 import Comments from "../../components/common/post/Comments";
 import PostOptions from "../../components/common/post/PostOptions";
@@ -16,13 +17,14 @@ const Post = () => {
   const { data, isLoading } = useGetPostQuery(postId);
   
   const { post, comments, relatedPosts } = data || {};
-  console.log(relatedPosts);
 
   return (
     <Wrapper title={isLoading ? 'Loading...' : post.caption}>
       <Header />
       {
-        isLoading ? <div>Loading...</div> : <div className="container mx-auto">
+        isLoading ? <div className="background h-screen flex items-center justify-center">
+          <Loader />
+        </div> : <div className="container mx-auto">
           <div className="mt-5 lg:mx-16 flex lg:flex-row flex-col border dark:border-[#2d343b]">
             <div className="flex-1 w-[65%] h-full">
               <Image src={post?.image} classname="h-[595px] object-cover w-full" />
@@ -56,18 +58,21 @@ const Post = () => {
                     </Link>
                   </div>
                 </div>
-                {/* Caption */}
-                <div className="mt-3">
-                  <p className="text-[14px] text-[#262626] font-[400] dark:text-gray-300">
-                    {post.caption}
-                  </p>
-                </div>
+                <div className="h-[300px] overflow-y-scroll  no-scrollbar">
+                    {/* Caption */}
+                    <div className="mt-3">
+                      <p className="text-[14px] text-[#262626] font-[400] dark:text-gray-300">
+                        {post.caption}
+                      </p>
+                    </div>
 
-                {/* Comments */}
-                <div className="">
-                  <Comments comments={comments} />
+                    {/* Comments */}
+                    <div className="">
+                      <Comments comments={comments} />
+                    </div>
+                  </div>
                 </div>
-              </div>
+                
               {/* likes, comment, share, saves */}
               <div className="px-5 border-t dark:border-[#2d343b]">
                 <PostReaction post={post} />

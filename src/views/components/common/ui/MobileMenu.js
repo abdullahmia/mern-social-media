@@ -22,13 +22,13 @@ const MobileMenu = () => {
 
         if (conversations) {
             const unread = conversations.filter((conversation) => {
-                return !conversation.seen.includes(user._id);
+                return !conversation.seen.includes(user?._id);
             });
 
             setUnreadMessages(unread.length);
         }
 
-    }, [conversations, user._id])
+    }, [conversations, user?._id])
 
 
 

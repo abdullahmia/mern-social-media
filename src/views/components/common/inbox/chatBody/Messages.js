@@ -24,7 +24,7 @@ const Messages = () => {
 
 
   return (
-    <div ref={ref} class="chat-body p-4 flex-1 flex flex-col overflow-y-scroll">
+    <div ref={ref} class="chat-body p-4 flex-1 flex flex-col overflow-y-scroll no-scrollbar">
       {
         renderMessages()
       }

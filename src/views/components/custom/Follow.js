@@ -4,13 +4,14 @@ import {
   useFollowMutation,
   useUnfollowMutation
 } from "../../../features/user/userApi";
+import NewChat from "../common/inbox/newChat/NewChat";
 import Loader from "../common/loaders/Loader";
 
 const Follow = ({ id, followers }) => {
   const { user: thisUser } = useSelector((state) => state.auth);
   const [follow, {isLoading: followLoading}] = useFollowMutation();
   const [unfollow, {isLoading: unFollowLoading}] = useUnfollowMutation();
-  const isFollowed = followers.find((follower) => follower === thisUser._id);
+  const isFollowed = followers.find((follower) => follower?._id === thisUser._id);
 
   // follow
   const followHandler = async () => {
@@ -18,11 +19,7 @@ const Follow = ({ id, followers }) => {
 
   };
 
-  // unfollow
-  const unfollowHandler = async () => {
-    await unfollow(id);
-
-  };
+  
 
   return !isFollowed ? (
     <button
@@ -32,12 +29,13 @@ const Follow = ({ id, followers }) => {
       {followLoading ? <Loader /> : "Follow"}
     </button>
   ) : (
-    <button
-      onClick={unfollowHandler}
-      className="bg-transparent border text-sm py-1 px-5 rounded text-gray-700"
-    >
-      {unFollowLoading ? <Loader /> : "Unfollow"}
-    </button>
+    // <button
+    //   onClick={unfollowHandler}
+    //   className="bg-transparent border text-sm py-1 px-5 rounded text-gray-700"
+    // >
+    //   {unFollowLoading ? <Loader /> : "Unfollow"}
+    // </button>
+    <NewChat />
   );
 };
 
