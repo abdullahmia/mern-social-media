@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetMessagesQuery } from "../../../../../features/message/messageApi";
 import useChatScroll from '../../../../../hooks/useChatScroll';
+import MessagesLoader from "../../loaders/MessagesLoader";
 import Message from "./Message";
 
 const Messages = () => {
@@ -12,7 +13,7 @@ const Messages = () => {
   
   // decide what to render
   const renderMessages = () => {
-    if (isLoading) return 'Loading...';
+    if (isLoading) return <MessagesLoader />;
     if (messages.length === 0) return 'No messages yet';
 
     return messages.map((message, key) => (
