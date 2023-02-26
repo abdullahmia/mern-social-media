@@ -49,7 +49,7 @@ const ProfileOptions = ({ profile }) => {
             >
                 <svg
                     aria-label="Options"
-                    // color="#262626"
+                    className='dark:text-gray-200'
                     fill="#262626"
                     height="24"
                     role="img"
@@ -105,7 +105,7 @@ const ProfileOptions = ({ profile }) => {
                                     {
                                         user._id === profile._id && <div className='w-full text-center divide-y  text-[#262626] dark:divide-[#2d343b] dark:text-gray-100'>
                                             <div className='py-3 text-[14px]'>
-                                                <Link to='/settings' className='block'>Change password</Link>
+                                                <Link to='/account/password' className='block'>Change password</Link>
                                             </div>
                                             <div className='py-3 text-[14px]'>QR Code</div>
                                             <div className='py-3 text-[14px]'>Apps and Website</div>

@@ -17,7 +17,7 @@ const Feed = () => {
       ) : (
         <>
           <Header />
-          <div className="container mx-auto px-12 flex gap-8 mt-5">
+          <div className="container mx-auto lg:px-12 px-5 flex gap-8 mt-5">
             <div className="lg:w-[490px] w-[430px]">
               <div>{/* Stories */}</div>
               <div className="flex flex-col gap-4 lg:mb-8 mb-20">

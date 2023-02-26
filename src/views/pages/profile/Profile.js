@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useUserDataQuery } from "../../../features/user/userApi";
 import Loader from "../../components/common/loaders/Loader";
 import Highlight from "../../components/common/profile/Highlight";
@@ -18,13 +18,13 @@ const Profile = () => {
   let user = data?.user;
   let posts = data?.posts;
   
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
   const { user: localUser } = useSelector((state) => state.auth);
 
-  const editProfileRedirect = () => {
-    navigate('/account/edit')
-  }
+  // const editProfileRedirect = () => {
+  //   navigate('/account/edit')
+  // }
 
   return (
     <Wrapper
@@ -55,7 +55,7 @@ const Profile = () => {
                   />
                 </div>
                 <div className="w-[80%] flex flex-col gap-4">
-                  <div className="flex items-center gap-5">
+                  <div className="flex items-center lg:gap-5 gap-2">
                     <h2 className="text-[28px] text-[#262626] font-[300] dark:text-gray-300">
                       {user?.username}
                     </h2>
@@ -71,9 +71,12 @@ const Profile = () => {
                     )}
                     <ProfileOptions profile={user} />
                   </div>
-                  <button  className="text-[14px] text-[#262626] font-[600] border px-2 py-1 rounded lg:hidden block dark:border-gray-600 dark:text-gray-400">
+
+                  {localUser._id === user?._id && <button className="text-[14px] text-[#262626] font-[600] border px-2 py-1 rounded lg:hidden block dark:border-gray-600 dark:text-gray-400">
                     Edit profile
-                  </button>
+                  </button>}
+
+
                   <div className="lg:block hidden">
                     <div className="flex items-center gap-10">
                       <h3 className="text-[#262626] dark:text-gray-400 text-[16px] font-[400]">

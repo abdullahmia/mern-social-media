@@ -5,7 +5,7 @@ import { useGetFollowersQuery } from '../../../../../features/user/userApi';
 import ProfilePicture from '../../../custom/images/ProfilePicture';
 import SendMessage from './SendMessage';
 
-const NewChat = ({isIcon}) => {
+const NewChat = ({isIcon, label}) => {
   const [isNewChatOpen, setIsNewChatOpen] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -27,7 +27,9 @@ const NewChat = ({isIcon}) => {
             <path
               d="M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1 1 0 0 1 0 2H4v14h14v-6z" />
           </svg>
-        </button>) : (<button onClick={toggleNewChat} className="bg-[#0095F6] text-sm py-2 px-5 rounded text-white">Send Message</button>)
+        </button>) : (<button onClick={toggleNewChat} className="bg-[#0095F6] text-sm py-2 px-5 rounded text-white">
+          {label ? label : 'New Message'}
+        </button>)
       }
       
 

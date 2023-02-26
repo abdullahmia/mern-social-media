@@ -26,11 +26,11 @@ const Post = () => {
           <Loader />
         </div> : <div className="container mx-auto">
           <div className="mt-5 lg:mx-16 flex lg:flex-row flex-col border dark:border-[#2d343b]">
-            <div className="flex-1 w-[65%] h-full">
+            <div className="flex-1 lg:w-[65%] w-full h-full">
               <Image src={post?.image} classname="h-[595px] object-cover w-full" />
 
             </div>
-            <div className="w-[35%]">
+            <div className="lg:w-[35%] w-full">
               <div className="py-5 px-5 flex justify-between items-center border-b dark:border-[#2d343b]">
                 <div className="flex items-center gap-3">
                   <Link to={`/${post.user.username}`}>
@@ -98,7 +98,7 @@ const Post = () => {
             </div>
           </div>
 
-          <div className="border-t dark:border-[#2d343b] mt-10  py-8">
+          <div className="border-t dark:border-[#2d343b] mt-10 lg:px-0 px-5 py-8">
             <h3 className="text-[14px] font-[700] text-[#8e8e8e] mb-4">
               More posts form{" "}
               <span className="text-[#262626]"> {post.user.username}</span>

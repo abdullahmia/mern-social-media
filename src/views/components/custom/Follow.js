@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
 
 import {
-  useFollowMutation,
-  useUnfollowMutation
+  useFollowMutation
 } from "../../../features/user/userApi";
 import NewChat from "../common/inbox/newChat/NewChat";
 import Loader from "../common/loaders/Loader";
@@ -10,7 +9,6 @@ import Loader from "../common/loaders/Loader";
 const Follow = ({ id, followers }) => {
   const { user: thisUser } = useSelector((state) => state.auth);
   const [follow, {isLoading: followLoading}] = useFollowMutation();
-  const [unfollow, {isLoading: unFollowLoading}] = useUnfollowMutation();
   const isFollowed = followers.find((follower) => follower?._id === thisUser._id);
 
   // follow
@@ -19,7 +17,6 @@ const Follow = ({ id, followers }) => {
 
   };
 
-  
 
   return !isFollowed ? (
     <button
@@ -35,7 +32,7 @@ const Follow = ({ id, followers }) => {
     // >
     //   {unFollowLoading ? <Loader /> : "Unfollow"}
     // </button>
-    <NewChat />
+    <NewChat label={"Message"} />
   );
 };
 

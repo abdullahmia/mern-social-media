@@ -28,7 +28,7 @@ const Conversation = ({conversation = {}}) => {
           <div class="w-10 h-10 relative flex flex-shrink-0">
               <ProfilePicture src={image} class="shadow-md rounded-full w-full h-full object-cover" />
           </div>
-          <div class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
+          <div class="flex-auto min-w-0 ml-4 mr-6 hidden lg:block">
               <p className="text-[#262626] dark:text-gray-200">{fullName}</p>
               <div class="flex items-center text-sm text-gray-600">
                   <div class="min-w-0">

@@ -58,7 +58,7 @@ const Post = ({ post = {} }) => {
           </h2>
           <span className="text-[14px] text-[#262626] dark:text-gray-300">
             {post?.caption.slice(0, 40)}
-            <Link to={`/p/${post?._id}`} className="ml-2 text-xs text-gray-600 dark:text-gray-300">See more</Link>
+            {post?.caption.length > 40 && <Link to={`/p/${post?._id}`} className="ml-2 text-xs text-gray-600 dark:text-gray-300">See more</Link>}
           </span>
         </div>
         <Link to={`/p/${post?._id}`} className="text-[14px] text-[#8e8e8e] font-[400] mt-2">

@@ -42,8 +42,10 @@ const ResetPasswordSet = () => {
     if (isSuccess) {
       // if success then redirect to login page with success message
       navigate("/login");
+      reset();
+      setSuccess("");
     }
-  }, [isError, responseError, isSuccess, data, navigate]);
+  }, [isError, responseError, isSuccess, data, navigate, reset]);
 
   return (
     <Wrapper title="Reset Password • Instagram">

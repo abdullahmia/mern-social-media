@@ -4,7 +4,7 @@ import useDarkTheme from "./hooks/useDarkTheme";
 import Main from "./views/pages/Main";
 
 const App = () => {
-  const [colorTheme] = useDarkTheme();
+  useDarkTheme();
   const authCheck = useAuthCheck();
 
   return authCheck ? (

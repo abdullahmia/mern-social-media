@@ -1,5 +1,6 @@
 import { Popover } from "@headlessui/react";
 import { Picker } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
 import { useAddCommentMutation } from "../../../../features/comment/commentApi";

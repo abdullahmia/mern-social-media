@@ -1,7 +1,8 @@
 import { Popover } from "@headlessui/react";
 import { Picker } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
 
-const EmojiPicker = ({text, setText}) => {
+const EmojiPicker = ({text, setText, ...rest}) => {
     // for adding emojis
     const addEmoji = (e) => {
         let sym = e.unified.split("-");
@@ -27,7 +28,7 @@ const EmojiPicker = ({text, setText}) => {
               </svg>
           </Popover.Button>
 
-          <Popover.Panel className="absolute z-10 w-full bg-black">
+          <Popover.Panel {...rest}>
               <Picker
                   onSelect={addEmoji}
                   theme="dark"

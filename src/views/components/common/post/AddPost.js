@@ -5,8 +5,10 @@ import { toast } from 'react-hot-toast';
 import { BiCloudUpload, BiX } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import { useAddPostMutation } from '../../../../features/post/postApi';
+import EmojiPicker from '../../custom/EmojiPicker';
 import ProfilePicture from '../../custom/images/ProfilePicture';
 import Loader from '../loaders/Loader';
+
 
 const fileTypes = ["JPEG", "PNG", "GIF", "JPG"];
 
@@ -142,10 +144,10 @@ const AddPost = () => {
                                     <form onSubmit={addNewPost} className='mt-6' id='postForm'>
                                         <div className='w-full flex'>
                                             <input type="text" value={caption} onChange={e => setCaption(e.target.value)} className='flex-1 w-full pb-16 mb-3 bg-transparent focus:outline-none' placeholder="What's on your mind?" />
-                                            {/* <EmojiPicker text={caption} setText={setCaption} /> */}
+                                              <EmojiPicker text={caption} setText={setCaption} className="absolute left-[-330px] z-10 w-full bg-black" />
                                         </div>
 
-                                          {file && <div className='w-full h-60 rounded relative mb-5'>
+                                          {file && <div className='w-full h-64 rounded relative mb-5'>
                                               <img src={URL.createObjectURL(file)} className="w-full h-full object-contain" alt="Post" />
                                               <button onClick={() => setFile(null)} className='absolute top-0 bg-gray-300 p-1 rounded-full'>
                                                   <BiX size={20} />
@@ -159,7 +161,7 @@ const AddPost = () => {
                                                   name="file"
                                                   types={fileTypes}
                                               >
-                                                  <div className='text-center border py-12 rounded  dark:border-[#2d343b]'>
+                                                  <div className='text-center border py-16 rounded  dark:border-[#2d343b]'>
                                                       <BiCloudUpload size={50} className="m-auto" />
                                                       <h2>Add photos/videos</h2>
                                                       <p>or drag & drop!</p>

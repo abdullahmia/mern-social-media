@@ -15,16 +15,9 @@ export const conversationApi = apiSlice.injectEndpoints({
                     // if current is on conversation participant list
                     if (conversation.participants.some((participant) => participant._id === user._id)) {
                         updateCachedData((draft) => {
-                            draft.push(conversation);
+                            // put the new conversation on top
+                            draft.unshift(conversation);
                         })
-
-                        
-                        // if (user._id === conversation.participants.find((participant) => participant._id !== user._id)._id) {
-                        //     toast.success(`${conversation.participants.find((participant) => participant._id !== user._id).fullName}send you message`);
-
-                        //     playNotificationSound();
-                        // }
-
                     }
 
                 });
