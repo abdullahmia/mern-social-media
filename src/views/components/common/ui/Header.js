@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/logo.png";
 import { userLoggedOut } from "../../../../features/auth/authSlice";
 import { useGetConversationsQuery } from "../../../../features/conversation/conversationApi";
+import useDarkTheme from "../../../../hooks/useDarkTheme";
 import ProfilePicture from "../../custom/images/ProfilePicture";
 import Switcher from "../../custom/Switcher";
 import Notifications from "../notification/Notifications";
@@ -14,12 +15,15 @@ import Search from "../search/Search";
 const Header = () => {
   const [unreadMessages, setUnreadMessages] = useState(null);
 
-
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+
+  // theme
+  const theme = useDarkTheme();
+  console.log(theme);
+
 
   // unread conversations
   const { data: conversations } = useGetConversationsQuery();
@@ -44,7 +48,7 @@ const Header = () => {
 
 
   return (
-    <div className="w-full bg-white dark:bg-[#121212] border-b py-4 border-[#dddddde0] dark:border-gray-800 px-4 lg:px-0 md:px-0 sticky top-0">
+    <div className="w-full bg-white dark:bg-[#121212] border-b py-4 border-[#dddddde0] dark:border-gray-800 px-4 lg:px-0 md:px-0 sticky top-0 z-50">
       <div className="container mx-auto">
         <div className="flex justify-between items-center lg:gap-0 gap-3">
           <div>

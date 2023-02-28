@@ -12,7 +12,7 @@ const Message = ({ message = {} }) => {
           </div>}
           <div class={`messages text-sm text-gray-700 grid grid-flow-row gap-2`}>
               <div class="flex items-center">
-                  <p class={`px-6 py-3 border rounded-full max-w-xs lg:max-w-md  ${sender?._id === user._id && 'bg-gray-100 dark:bg-gray-600'} dark:border-[#2d343b] dark:text-gray-300`}>{text}</p>
+                  <p class={`px-6 py-3 border rounded-full max-w-xs lg:max-w-md  ${sender?._id === user._id && 'bg-gray-100 dark:bg-[#262626]'} dark:border-[#2d343b] dark:text-gray-300`}>{text}</p>
               </div>
           </div>
       </div>
