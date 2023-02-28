@@ -1,13 +1,13 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
+import { BiMoon } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/logo.png";
 import { userLoggedOut } from "../../../../features/auth/authSlice";
 import { useGetConversationsQuery } from "../../../../features/conversation/conversationApi";
-import useDarkTheme from "../../../../hooks/useDarkTheme";
+import { setDarkTheme, setLightTheme } from "../../../../features/theme/themeSlice";
 import ProfilePicture from "../../custom/images/ProfilePicture";
-import Switcher from "../../custom/Switcher";
 import Notifications from "../notification/Notifications";
 import AddPost from "../post/AddPost";
 import Search from "../search/Search";
@@ -19,10 +19,16 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+  const {theme} = useSelector(state => state.theme);
 
-  // theme
-  const theme = useDarkTheme();
-  console.log(theme);
+  // theme handler
+  const themeHandler = () => {
+    if (theme === "light") {
+      dispatch(setDarkTheme());
+    } else {
+      dispatch(setLightTheme());
+    }
+  }
 
 
   // unread conversations
@@ -248,9 +254,8 @@ const Header = () => {
                           </Link>
                         </li>
                         <li className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                          <button className="w-full flex items-center gap-4 text-[#262626] dark:text-gray-300">
-                            <Switcher />
-                            Theme
+                          <button onClick={themeHandler} className="w-full flex items-center gap-4 text-[#262626] dark:text-gray-300">
+                            <BiMoon size={20} />Theme
                           </button>
                         </li>
                         <li className="border-t mt-1 block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white dark:border-gray-800 ">

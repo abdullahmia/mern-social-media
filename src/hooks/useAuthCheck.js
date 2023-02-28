@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { userLoggedIn } from "../features/auth/authSlice";
+import { setDarkTheme, setLightTheme } from "../features/theme/themeSlice";
 
 const useAuthCheck = () => {
   const [authCheck, setAuthCheck] = useState(false);
@@ -9,6 +10,7 @@ const useAuthCheck = () => {
   useEffect(() => {
     let user = localStorage.getItem("user");
     let token = localStorage.getItem("token");
+    let theme = localStorage.getItem("theme") || 'light';
     user = JSON.parse(user);
     if (token && user) {
       dispatch(
@@ -17,6 +19,13 @@ const useAuthCheck = () => {
           token: token,
         })
       );
+    }
+
+    // set theme
+    if (theme === "light") {
+      dispatch(setLightTheme());
+    } else {
+      dispatch(setDarkTheme());
     }
 
     setAuthCheck(true);
