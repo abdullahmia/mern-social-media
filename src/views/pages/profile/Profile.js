@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import verifiedBadge from '../../../assets/verified.png';
 import { useUserDataQuery } from "../../../features/user/userApi";
 import Loader from "../../components/common/loaders/Loader";
 import Highlight from "../../components/common/profile/Highlight";
@@ -17,14 +18,8 @@ const Profile = () => {
   const { data, isLoading, isError } = useUserDataQuery(username);
   let user = data?.user;
   let posts = data?.posts;
-  
-  // const navigate = useNavigate();
-  
+    
   const { user: localUser } = useSelector((state) => state.auth);
-
-  // const editProfileRedirect = () => {
-  //   navigate('/account/edit')
-  // }
 
   return (
     <Wrapper
@@ -56,9 +51,15 @@ const Profile = () => {
                 </div>
                 <div className="w-[80%] flex flex-col gap-4">
                   <div className="flex items-center lg:gap-5 gap-2">
-                    <h2 className="text-[28px] text-[#262626] font-[300] dark:text-gray-300">
-                      {user?.username}
-                    </h2>
+                    <div className="flex items-center gap-1">
+                        <h2 className="text-[28px] text-[#262626] font-[300] dark:text-gray-300">
+                          {user?.username}
+                        </h2>
+                        {user?.isVerified && <img src={verifiedBadge} className="w-5 h-5" alt="verified" />}
+                    </div>
+                    
+                    
+                    
                     {localUser._id === user?._id ? (
                       <Link
                         to={"/account/edit"}

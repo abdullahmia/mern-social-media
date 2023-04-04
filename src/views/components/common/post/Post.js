@@ -4,6 +4,7 @@ import { useLikePostMutation } from '../../../../features/post/postApi';
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import verifiedBadge from '../../../../assets/verified.png';
 import ProfilePicture from "../../custom/images/ProfilePicture";
 import Image from "../ui/Image";
 import CommentInput from "./CommentInput";
@@ -32,6 +33,7 @@ const Post = ({ post = {} }) => {
           <div>
             <Link to={`/${post?.user?.username}`} className="text-[14px] text-[#262626] dark:text-gray-100 font-[600]">
               {post?.user?.username}
+              {post?.user?.isVerified && <img src={verifiedBadge} className="w-5 h-5" alt="verified" />}
             </Link>
           </div>
         </div>

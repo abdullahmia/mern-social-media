@@ -51,7 +51,7 @@ const Login = () => {
             <img src={loginImg} alt="" />
           </div>
           <div>
-            <div className="bg-[#FFFFFF] w-[348px] h-[424px] px-8 border border-[#d3d0d0] dark:bg-[#252a30] dark:border-[#2d343b]">
+            <div className="bg-[#FFFFFF] w-[348px] h-[464px] px-8 border border-[#d3d0d0] dark:bg-[#252a30] dark:border-[#2d343b]">
               <div className="py-10 flex justify-center">
                 <img src={logo} alt="" />
               </div>
@@ -65,6 +65,9 @@ const Login = () => {
                   onSubmit={handleSubmit(loginSubmit)}
                   className="flex flex-col gap-3"
                 >
+                  <p className="text-[12px] text-[#8e8e8e] px-2 text-center">
+                    To login with demo account here is username: <b>instagram</b> password: <b>abdullah</b>
+                  </p>
                   <input
                     {...register("username")}
                     type="text"
